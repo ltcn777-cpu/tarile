@@ -14,10 +14,9 @@ main,footer{position:relative;z-index:1}
 
 /* ---------- STARS (nền vũ trụ, trôi rất chậm) ---------- */
 .stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.stars::before,.stars::after{content:"";position:absolute;left:0;top:0;width:1px;height:1px;background:transparent;box-shadow:var(--s);animation:drift 160s linear infinite,twinkle 5s ease-in-out infinite}
-.stars::after{top:1400px}
-.stars.s2::before,.stars.s2::after{width:2px;height:2px;animation:drift 260s linear infinite,twinkle 7s 1.5s ease-in-out infinite}
-@keyframes drift{to{transform:translateY(-1400px)}}
+.stars::before{content:"";position:absolute;left:0;top:0;width:1px;height:1px;background:transparent;box-shadow:var(--s);animation:drift 100s linear infinite,twinkle 5s ease-in-out infinite}
+.stars.s2::before{width:2px;height:2px;animation:drift 170s linear infinite,twinkle 7s 1.5s ease-in-out infinite}
+@keyframes drift{to{transform:translate(calc(var(--t) * -1),calc(var(--t) * -1))}}
 @keyframes twinkle{0%,100%{opacity:.35}50%{opacity:1}}
 
 /* ---------- HEADER ---------- */
@@ -68,6 +67,12 @@ nav a:active{transform:scale(.95)}
   nav.open a{transform:none}
 }
 
+nav a.off{color:var(--muted);cursor:not-allowed;background:#ffffff08}
+nav a.off:hover,nav a.off:focus-visible{color:var(--muted);transform:none}
+nav a.off:hover::before{transform:translateX(-101%) skewX(-20deg)}
+nav a.off:hover i{color:var(--cyan)}
+nav a.off:active{transform:none}
+
 /* ---------- HERO ---------- */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:130px clamp(16px,6vw,80px) 90px;overflow:hidden;
   background:radial-gradient(900px 500px at 80% 20%,#9D4EDD33,transparent 60%),radial-gradient(700px 400px at 10% 90%,#00E5FF14,transparent 60%)}
@@ -90,11 +95,12 @@ nav a:active{transform:scale(.95)}
   animation:float 18s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(22px,-26px)}}
 
-.hero h1{position:relative;margin:0;font-family:var(--disp);font-style:italic;font-weight:800;font-size:clamp(4.5rem,19vw,13rem);line-height:.88;text-transform:uppercase;color:var(--text)}
+.hero h1{position:relative;margin:0;font-family:var(--disp);font-style:italic;font-weight:800;font-size:clamp(4.5rem,19vw,13rem);line-height:.88;text-transform:uppercase;letter-spacing:.02em}
 .hero h1 span{display:block;opacity:0;transform:translateX(-80px) skewX(-10deg);animation:in .9s cubic-bezier(.2,.9,.3,1) forwards}
-.hero h1 span:nth-child(2){color:transparent;-webkit-text-stroke:4px var(--gold);paint-order:stroke fill;animation:in .9s .2s cubic-bezier(.2,.9,.3,1) forwards,glow 6s 1.5s ease-in-out infinite}
+.hero h1 span:nth-child(1){color:#0077FF;-webkit-text-stroke:6px #fff;paint-order:stroke fill;filter:drop-shadow(0 0 22px rgba(0,119,255,.5))}
+.hero h1 span:nth-child(2){color:transparent;-webkit-text-stroke:3px #FF007F;animation:in .9s .2s cubic-bezier(.2,.9,.3,1) forwards,glow 6s 1.5s ease-in-out infinite;filter:drop-shadow(0 0 5px #FF007F) drop-shadow(0 0 15px #FF007F) drop-shadow(0 0 30px rgba(255,0,127,.5))}
 @keyframes in{to{opacity:1;transform:none}}
-@keyframes glow{0%,100%{filter:drop-shadow(0 0 0 rgba(255,179,0,0))}50%{filter:drop-shadow(0 0 18px rgba(255,179,0,.55))}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 4px #FF007F) drop-shadow(0 0 12px #FF007F) drop-shadow(0 0 24px rgba(255,0,127,.4))}50%{filter:drop-shadow(0 0 6px #FF007F) drop-shadow(0 0 20px #FF007F) drop-shadow(0 0 40px rgba(255,0,127,.65))}}
 .tag{position:relative;margin:22px 0 28px;font-family:var(--disp);font-style:italic;font-weight:700;font-size:clamp(1.1rem,3vw,1.7rem);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);opacity:0;animation:in .8s .7s forwards}
 
 /* Nút Khám phá: nền trong suốt, viền cyan; rê chuột mới đầy màu */
@@ -105,7 +111,7 @@ nav a:active{transform:scale(.95)}
 
 /* Thanh chữ chạy: nền đen xanh, chữ cyan, chạy chậm */
 .marquee{position:absolute;left:0;right:0;bottom:0;overflow:hidden;background:#0A0E1A;color:var(--cyan);border-top:1px solid #00E5FF55}
-.marquee div{display:flex;width:max-content;animation:mq 70s linear infinite}
+.marquee div{display:flex;width:max-content;animation:mq 30s linear infinite}
 .marquee span{padding:10px 26px;font-family:var(--disp);font-style:italic;font-weight:800;font-size:1.15rem;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
 @keyframes mq{to{transform:translateX(-50%)}}
 
