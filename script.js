@@ -99,8 +99,8 @@ if(phil){
     pqBox.classList.add('out');
     setTimeout(function(){
       var q=PQ[i];
-      document.getElementById('pqEn').textContent=q.en;document.getElementById('pqTag').textContent=q.tag;
-      document.getElementById('pqVi').textContent=q.vi;document.getElementById('pqDesc').textContent=q.desc;
+      document.getElementById('pqMain').textContent=q.vi;document.getElementById('pqTag').textContent=q.tag;
+      document.getElementById('pqSub').textContent=q.en;document.getElementById('pqDesc').textContent=q.desc;
       document.getElementById('pqCnt').textContent='0'+(i+1)+' / 03';
       pqPills.forEach(function(p,k){p.classList.toggle('on',k===i)});
       pqBox.classList.remove('out');
