@@ -189,3 +189,38 @@ footer{padding:40px;text-align:center;color:var(--muted);font-size:.85rem;border
   .glitch-active{animation:none}
   .glitch-active::before,.glitch-active::after{display:none}
 }
+
+/* ---------- TRANG GIỚI THIỆU ---------- */
+.about>*{position:relative}
+.about p{max-width:62ch}
+.about .kick{margin:10px 0 0;font-family:var(--disp);font-style:italic;font-weight:700;font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.ab-top{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;margin-top:48px;max-width:1100px}
+.hi{margin:0 0 18px;font-family:var(--disp);font-style:italic;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);line-height:1}
+.hi em{font-style:italic;background:linear-gradient(180deg,#00F5FF,#0066FF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-top:2px solid var(--c,var(--cyan));padding:22px;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,229,255,.12)}
+.card h4{margin:0 0 8px;font-family:var(--disp);font-style:italic;font-weight:800;font-size:1.5rem;text-transform:uppercase}
+.card p{margin:0;font-size:.92rem;line-height:1.6}
+.card small{display:block;margin-bottom:6px;font-family:var(--disp);font-weight:700;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+.ico{display:block;margin-bottom:8px;font-style:normal;font-size:1.6rem;color:var(--c);text-shadow:0 0 12px var(--c)}
+.prof h4{margin:0 0 14px;color:var(--cyan)}
+.prof dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0}
+.prof dt{color:var(--muted);font-size:.85rem}.prof dd{margin:0;font-weight:500}
+.sub{display:flex;align-items:center;gap:14px;max-width:1100px;margin:72px 0 22px;font-family:var(--disp);font-style:italic;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);text-transform:uppercase}
+.sub::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;max-width:1100px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chips span{padding:3px 10px;border:1px solid var(--line);font-size:.75rem;color:var(--muted)}
+.tl{max-width:760px;margin:0;padding:0 0 0 22px;list-style:none;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:0 0 26px 22px}
+.tl li::before{content:"";position:absolute;left:-31px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--bg2);border:2px solid var(--cyan);box-shadow:0 0 10px var(--cyan)}
+.tl b{display:block;font-family:var(--disp);font-style:italic;font-size:1.2rem;letter-spacing:.06em;text-transform:uppercase}
+.tl span{color:var(--muted);line-height:1.6}
+.note{font-size:.8rem}
+.q{margin:72px 0 18px;padding:12px 0 12px 26px;max-width:900px;border-left:4px solid var(--purple);font-family:var(--disp);font-style:italic;font-weight:700;font-size:clamp(1.5rem,3.5vw,2.4rem);line-height:1.25}
+.q cite{display:block;margin-top:14px;font-size:.85rem;font-style:normal;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.ups{max-width:1100px;margin:0;padding:0;list-style:none}
+.ups li{display:grid;grid-template-columns:90px 1fr auto;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.ups time{font-family:var(--disp);font-weight:700;color:var(--gold)}
+.ups b{padding:2px 10px;border:1px solid rgba(0,229,255,.4);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+@media (max-width:860px){.ab-top{grid-template-columns:1fr}.ups li{grid-template-columns:70px 1fr}.ups b{grid-column:2;justify-self:start}}

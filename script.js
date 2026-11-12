@@ -13,7 +13,7 @@ nav.addEventListener('click',function(e){
 document.querySelector('.logo').addEventListener('click',function(){links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#gioi-thieu')})});
 
 /* Hiệu ứng hiện dần khi cuộn tới (không ảnh hưởng menu) */
-var rv=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}})},{threshold:.2});
+var rv=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}})},{threshold:.05});
 [].slice.call(document.querySelectorAll('section.s')).forEach(function(s){rv.observe(s)});
 
 /* Vì sao: tạo ngẫu nhiên bằng box-shadow, bay chéo chậm và lặp liền mạch */
