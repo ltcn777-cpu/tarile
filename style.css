@@ -213,12 +213,7 @@ footer{padding:40px;text-align:center;color:var(--muted);font-size:.85rem;border
 .tl li::before{content:"";position:absolute;left:-31px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--bg2);border:2px solid var(--cyan);box-shadow:0 0 10px var(--cyan)}
 .tl b{display:block;font-family:var(--disp);font-style:italic;font-size:1.2rem;letter-spacing:.06em;text-transform:uppercase}
 .tl span{color:var(--muted);line-height:1.6}
-.note{font-size:.8rem}
-.ups{max-width:1100px;margin:0;padding:0;list-style:none}
-.ups li{display:grid;grid-template-columns:90px 1fr auto;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
-.ups time{font-family:var(--disp);font-weight:700;color:var(--gold)}
-.ups b{padding:2px 10px;border:1px solid rgba(0,229,255,.4);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
-@media (max-width:860px){.ab-top{grid-template-columns:1fr}.ups li{grid-template-columns:70px 1fr}.ups b{grid-column:2;justify-self:start}}
+@media (max-width:860px){.ab-top{grid-template-columns:1fr}}
 
 /* ---------- GIỚI THIỆU: Esports HUD ---------- */
 .about{--disp:'Chakra Petch','Be Vietnam Pro',system-ui,sans-serif;--body:'Plus Jakarta Sans','Be Vietnam Pro',system-ui,sans-serif;font-family:var(--body)}
@@ -305,3 +300,38 @@ section.s.about{background-color:rgba(7,9,19,.72);background-image:radial-gradie
 .pq-pill:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
 .pq-cnt{margin-left:8px;font-family:var(--disp);font-size:.8rem;letter-spacing:.1em;color:#00d2ff}
 
+/* ---------- LATEST UPDATES: Esports Cyber-Timeline ---------- */
+.up-head{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1100px;margin:72px 0 22px}
+.up-head .sub{flex:1;margin:0}
+.up-live{display:flex;align-items:center;gap:8px;flex:none;font-family:var(--disp);font-size:.78rem;font-weight:700;letter-spacing:.16em;color:#00f0ff;background:rgba(0,240,255,.08);border:1px solid rgba(0,240,255,.3);padding:6px 14px;border-radius:4px}
+.up-ld{width:7px;height:7px;border-radius:50%;background:#00f0ff;box-shadow:0 0 10px #00f0ff;animation:upLive 1.5s infinite}
+@keyframes upLive{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.75)}}
+.up-list{position:relative;display:flex;flex-direction:column;max-width:1100px;margin:0;padding:0;list-style:none}
+.up-list::before{content:"";position:absolute;left:25px;top:28px;bottom:28px;width:1.5px;background:linear-gradient(180deg,#f59e0b,#00f0ff,#a855f7,#ff2a85);opacity:.35}
+.up-row{position:relative;display:grid;grid-template-columns:36px 135px 1fr auto;align-items:center;gap:16px;padding:22px 18px 22px 8px;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer;overflow:hidden;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.up-row::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--rg),transparent 75%);opacity:0;transition:opacity .3s ease;pointer-events:none}
+.up-row::after{content:"";position:absolute;bottom:0;left:0;width:0;height:1.5px;background:linear-gradient(90deg,var(--rc),transparent);transition:width .45s ease}
+.up-row:hover{transform:translateX(6px)}
+.up-row:hover::before{opacity:1}
+.up-row:hover::after{width:100%}
+.up-node{position:relative;z-index:2;display:flex;justify-content:center;align-items:center}
+.up-dot{position:relative;display:block;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2.5px solid var(--rc);box-shadow:0 0 10px var(--rc);transition:transform .3s ease,background .3s ease}
+.up-row:hover .up-dot{background:var(--rc);transform:scale(1.25)}
+.up-dot.up-on{background:var(--rc)}
+.up-dot.up-on::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid var(--rc);animation:upRipple 2s infinite}
+@keyframes upRipple{0%{transform:scale(.8);opacity:.9}100%{transform:scale(2.1);opacity:0}}
+.up-date{font-family:var(--disp);font-size:1rem;font-weight:700;letter-spacing:.06em;color:var(--dc)}
+.up-text{font-size:1.02rem;font-weight:500;color:#e2e8f0;transition:color .25s ease}
+.up-row:hover .up-text{color:#fff}
+.up-badge{min-width:118px;padding:6px 16px;font-family:var(--disp);font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-align:center;color:var(--rc);border:1px solid var(--rc);background:rgba(9,11,22,.7);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);transition:all .3s ease}
+.up-row:hover .up-badge{background:var(--rc);color:#070913;box-shadow:0 0 18px var(--rc)}
+.up-foot{max-width:1100px;margin:22px 0 0;padding-left:12px;font-size:.85rem;color:#64748b}
+@media (max-width:720px){
+  .up-head{flex-wrap:wrap}
+  .up-list::before,.up-node{display:none}
+  .up-row{grid-template-columns:1fr auto;gap:8px 12px;padding:18px 8px}
+  .up-date{grid-column:1/2;font-size:.9rem}
+  .up-text{grid-column:1/2;font-size:.95rem}
+  .up-badge{grid-column:2/3;grid-row:1/3}
+}
+@media (prefers-reduced-motion:reduce){.up-ld,.up-dot.up-on::after{animation:none}.up-row,.up-row::after{transition:none}}

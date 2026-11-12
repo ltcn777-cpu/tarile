@@ -88,9 +88,9 @@ if(pjG){
 }
 /* Triết lý: 3 câu tự luân phiên */
 var PQ=[
- {en:'“Without seeing reality clearly, wealth, kindness, and subtlety all become useless.”',tag:'Tari Le // Strategic Vision 01',vi:'“Không Nhìn Rõ Thực Tế — Kinh Tế, Tử Tế, Tinh Tế Cũng Trở Nên Vô Dụng.”',desc:'Tư duy cốt lõi trong điều hành và sáng tạo: mọi nguồn lực hay sự khéo léo đều chỉ phát huy giá trị khi được đặt trên nền tảng nhìn nhận đúng bản chất thực tế.'},
- {en:'“Don’t exaggerate what you hear, and never grow lazy when pressure rises.”',tag:'Tari Le // Core Discipline 02',vi:'“Đừng Nghe 1 Kể 10 — Đừng Thấy Ngột Ngạt Mà Lười.”',desc:'Giữ sự chuẩn xác trong từng thông tin và duy trì kỷ luật trước áp lực cao: bản lĩnh tạo nên khác biệt trong môi trường cạnh tranh.'},
- {en:'“Never trade a lifetime of peace for a fleeting moment of comfort.”',tag:'Tari Le // Long-Term Mindset 03',vi:'“Đừng Vì Sung Sướng Nhất Thời Mà Làm Đau Khổ Cả Đời.”',desc:'Tập trung vào giá trị bền vững thay vì những cám dỗ ngắn hạn. Mỗi lựa chọn kỷ luật hôm nay là nền móng vững chắc cho tương lai.'}
+ {en:'“Without seeing reality clearly, wealth, kindness, and subtlety all become useless”',tag:'Tari Le // Strategic Vision 01',vi:'“Không Nhìn Rõ Thực Tế — Kinh Tế, Tử Tế, Tinh Tế Cũng Trở Nên Vô Dụng”',desc:'Tư duy cốt lõi trong điều hành và sáng tạo: mọi nguồn lực hay sự khéo léo đều chỉ phát huy giá trị khi được đặt trên nền tảng nhìn nhận đúng bản chất thực tế.'},
+ {en:'“Don’t exaggerate what you hear, and never grow lazy when pressure rises”',tag:'Tari Le // Core Discipline 02',vi:'“Đừng Nghe 1 Kể 10 — Đừng Thấy Ngột Ngạt Mà Lười”',desc:'Giữ sự chuẩn xác trong từng thông tin và duy trì kỷ luật trước áp lực cao: bản lĩnh tạo nên khác biệt trong môi trường cạnh tranh.'},
+ {en:'“Never trade a lifetime of peace for a fleeting moment of comfort”',tag:'Tari Le // Long-Term Mindset 03',vi:'“Đừng Vì Sung Sướng Nhất Thời Mà Làm Đau Khổ Cả Đời”',desc:'Tập trung vào giá trị bền vững thay vì những cám dỗ ngắn hạn. Mỗi lựa chọn kỷ luật hôm nay là nền móng vững chắc cho tương lai.'}
 ];
 var phil=document.getElementById('phil');
 if(phil){
