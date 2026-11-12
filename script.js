@@ -29,3 +29,17 @@ function makeStars(el,count,colors){
 }
 makeStars(document.getElementById('st1'),130,['#ffffff','#E0E6ED']);
 makeStars(document.getElementById('st2'),50,['#ffffff','#9D4EDD','#00E5FF','#FFB300']);
+
+/* Logo: cứ ~4 giây glitch rồi đổi qua lại giữa WSB và WASABI */
+var logo=document.querySelector('.logo'),bT=document.getElementById('brandTitle'),bS=document.getElementById('brandSub'),isW=false;
+function glitchSwap(){
+  bT.classList.add('glitch-active');bS.classList.add('glitch-active');
+  setTimeout(function(){
+    isW=!isW;
+    logo.classList.toggle('is-wasabi',isW);
+    bS.textContent=isW?'WASABI':'WSB';
+    bS.setAttribute('data-text',bS.textContent);
+  },170);
+  setTimeout(function(){bT.classList.remove('glitch-active');bS.classList.remove('glitch-active')},400);
+}
+setInterval(glitchSwap,4000);

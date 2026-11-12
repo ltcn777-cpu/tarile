@@ -30,19 +30,24 @@ main,footer{position:relative;z-index:1}
 @keyframes hdIn{from{transform:translateY(-100%)}}
 @keyframes flow{to{background-position:200% 0}}
 
-/* Logo: TARI LE (Syne) + WSB dính liền (Space Mono); rê chuột thì bung thành WASABI xanh lá */
+/* Logo: TARI LE + WSB màu trắng; cứ vài giây glitch rồi đổi thành WASABI xanh lá, sau đó glitch về lại */
 .logo{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1;padding:2px 0;cursor:pointer;user-select:none;animation:slideR .9s .2s cubic-bezier(.2,.9,.3,1) both}
 @keyframes slideR{from{opacity:0;transform:translateX(-40px)}}
+.logo b,.logo small{position:relative;isolation:isolate;transform-origin:left center;transition:color .35s,text-shadow .35s}
 .logo b{font-family:'Syne','Be Vietnam Pro',system-ui,sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.85rem);letter-spacing:.04em;color:#FFFFFF;text-transform:uppercase}
-.logo small{display:flex;align-items:center;margin-top:6px;font-family:'Space Mono',ui-monospace,monospace;font-weight:700;font-size:.82rem;letter-spacing:.12em;color:rgba(255,255,255,.55);transition:color .4s,text-shadow .4s}
-.logo small span{display:inline-block;line-height:1.2}
-.logo .hc{max-width:0;opacity:0;overflow:hidden;transform:translateY(6px);transition:max-width .45s cubic-bezier(.22,1,.36,1),opacity .3s,transform .4s}
-.logo:hover small,.logo:focus-visible small{color:#76FF03;text-shadow:0 0 12px rgba(118,255,3,.6)}
-.logo:hover .hc,.logo:focus-visible .hc{max-width:.85em;opacity:1;transform:none}
-.logo:hover .hc:nth-child(2),.logo:focus-visible .hc:nth-child(2){transition-delay:.05s}
-.logo:hover .hc:nth-child(4),.logo:focus-visible .hc:nth-child(4){transition-delay:.13s}
-.logo:hover .hc:nth-child(6),.logo:focus-visible .hc:nth-child(6){transition-delay:.21s}
+.logo small{margin-top:6px;font-family:'Space Mono',ui-monospace,monospace;font-weight:700;font-size:.82rem;letter-spacing:.14em;color:rgba(255,255,255,.75)}
+.logo.is-wasabi b{color:var(--cyan);text-shadow:0 0 12px rgba(0,229,255,.6)}
+.logo.is-wasabi small{color:#76FF03;text-shadow:0 0 12px rgba(118,255,3,.7)}
 .logo:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
+/* Glitch: rung nghiêng + hai lớp bóng nhiễu hồng và cyan */
+.glitch-active{animation:glitch-skew .38s cubic-bezier(.25,.46,.45,.94) both}
+.glitch-active::before,.glitch-active::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;height:100%;opacity:.85;text-transform:inherit;pointer-events:none}
+.glitch-active::before{color:#FF007F;z-index:-1;animation:glitch-1 .38s infinite linear alternate-reverse}
+.glitch-active::after{color:#00E5FF;z-index:-2;animation:glitch-2 .38s infinite linear alternate-reverse}
+@keyframes glitch-skew{0%{transform:skew(0)}20%{transform:skew(-12deg)}40%{transform:skew(12deg)}60%{transform:skew(-6deg)}80%{transform:skew(6deg)}100%{transform:skew(0)}}
+@keyframes glitch-1{0%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}100%{transform:translate(-1px,2px)}}
+@keyframes glitch-2{0%{transform:translate(2px,-1px)}50%{transform:translate(-2px,1px)}100%{transform:translate(1px,-2px)}}
 
 nav{display:flex;gap:6px}
 nav a{position:relative;display:flex;align-items:baseline;gap:7px;padding:12px 22px;overflow:hidden;
@@ -140,4 +145,6 @@ footer{padding:40px;text-align:center;color:var(--muted);font-size:.85rem;border
   .hero h1 span:nth-child(2){animation:glow 6s ease-in-out infinite}
   .slash{animation:shift 14s ease-in-out infinite alternate}
   .rv{opacity:1;transform:none;transition:none}
+  .glitch-active{animation:none}
+  .glitch-active::before,.glitch-active::after{display:none}
 }
