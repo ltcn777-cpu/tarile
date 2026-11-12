@@ -21,7 +21,7 @@ main,footer{position:relative;z-index:1}
 
 /* ---------- HEADER ---------- */
 #hd{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-  padding:calc(env(safe-area-inset-top,0px) + 14px) clamp(16px,4vw,48px) 14px;
+  padding:calc(env(safe-area-inset-top,0px) + 16px) clamp(16px,4vw,48px) 22px;
   background:linear-gradient(180deg,#060814f2,#0B0B26cc);backdrop-filter:blur(10px);
   clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 28px) 100%,0 100%);
   animation:hdIn .8s cubic-bezier(.2,.9,.3,1) both}
@@ -31,11 +31,11 @@ main,footer{position:relative;z-index:1}
 @keyframes flow{to{background-position:200% 0}}
 
 /* Logo: TARI LE + WSB màu trắng; cứ vài giây glitch rồi đổi thành WASABI xanh lá, sau đó glitch về lại */
-.logo{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1;padding:2px 0;cursor:pointer;user-select:none;animation:slideR .9s .2s cubic-bezier(.2,.9,.3,1) both}
+.logo{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1.1;justify-content:center;padding:6px 0;cursor:pointer;user-select:none;animation:slideR .9s .2s cubic-bezier(.2,.9,.3,1) both}
 @keyframes slideR{from{opacity:0;transform:translateX(-40px)}}
 .logo b,.logo small{position:relative;isolation:isolate;transform-origin:left center;transition:color .35s,text-shadow .35s}
-.logo b{font-family:'Syne','Be Vietnam Pro',system-ui,sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.85rem);letter-spacing:.04em;color:#FFFFFF;text-transform:uppercase}
-.logo small{margin-top:6px;font-family:'Space Mono',ui-monospace,monospace;font-weight:700;font-size:.82rem;letter-spacing:.14em;color:rgba(255,255,255,.75)}
+.logo b{font-family:'Chakra Petch','Be Vietnam Pro',system-ui,sans-serif;font-weight:700;font-size:clamp(1.4rem,2.8vw,1.65rem);letter-spacing:.1em;color:#FFFFFF;text-transform:uppercase}
+.logo small{margin-top:4px;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:600;font-size:.72rem;letter-spacing:.3em;color:rgba(255,255,255,.65)}
 .logo.is-wasabi b{color:var(--cyan);text-shadow:0 0 12px rgba(0,229,255,.6)}
 .logo.is-wasabi small{color:#76FF03;text-shadow:0 0 12px rgba(118,255,3,.7)}
 .logo:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
