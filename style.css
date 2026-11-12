@@ -109,7 +109,7 @@ nav a.off:active{transform:none}
 
 .hero h1{position:relative;margin:0;font-family:'Chakra Petch','Be Vietnam Pro',system-ui,sans-serif;font-style:italic;font-weight:700;font-size:clamp(4rem,16vw,11rem);line-height:.92;text-transform:uppercase;letter-spacing:.03em}
 .hero h1 span{display:block;opacity:0;transform:translateX(-80px) skewX(-10deg);animation:in .9s cubic-bezier(.2,.9,.3,1) forwards}
-.hero h1 span:nth-child(1){background:linear-gradient(180deg,#00F5FF 0%,#0066FF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.85);filter:drop-shadow(0 8px 20px rgba(0,102,255,.45))}
+.hero h1 span:nth-child(1){position:relative;background:linear-gradient(180deg,#00F5FF 0%,#0066FF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.85);filter:drop-shadow(0 8px 20px rgba(0,102,255,.45))}
 .hero h1 span:nth-child(2){font-family:'Orbitron','Chakra Petch',system-ui,sans-serif;font-weight:800;font-size:.86em;letter-spacing:.06em;
   /* Viền trắng bạc mảnh, rỗng ruột hoàn toàn, không bóng, không glow */
   color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.85);filter:none;text-shadow:none;
@@ -122,12 +122,29 @@ nav a.off:active{transform:none}
   background-image:radial-gradient(circle at 20% 30%,#fff 1px,transparent 1.5px),radial-gradient(circle at 45% 20%,#fff 1.2px,transparent 2px),radial-gradient(circle at 30% 60%,#FFD6E8 1px,transparent 1.5px),radial-gradient(circle at 15% 80%,#fff 1.5px,transparent 2px),radial-gradient(circle at 50% 45%,#fff .8px,transparent 1.2px),linear-gradient(135deg,#FF1E8E 0%,#B5179E 50%,#7209B7 100%);
   background-size:40px 40px,50px 50px,35px 35px,60px 60px,30px 30px,100% 100%;
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;-webkit-text-stroke:1.5px #FF47A3;
-  filter:drop-shadow(0 0 8px rgba(255,30,142,.55))}
+  filter:drop-shadow(0 0 8px rgba(255,30,142,.55));animation:cosmicDust 6s linear infinite}
 /* Chữ L: thân đứng tím hồng từ đỉnh xuống đáy, đuôi ngang bên phải là glass */
 .hero h1 span:nth-child(2) i:nth-child(1)::before{clip-path:polygon(-20% -10%,91% -10%,53% 110%,-20% 110%)}
 /* Chữ E: nét 1 (trên) full tím hồng; nét 2 (giữa) nửa trái tím hồng; thân dọc bên trái tím hồng xuống tới đáy; nét 3 (dưới) glass */
 .hero h1 span:nth-child(2) i:nth-child(2){padding-right:18px}
-.hero h1 span:nth-child(2) i:nth-child(2)::before{clip-path:polygon(-20% -10%,120% -10%,120% 36%,52% 36%,42% 68%,34% 68%,28% 110%,-20% 110%)}
+.hero h1 span:nth-child(2) i:nth-child(2)::before{clip-path:polygon(-20% -10%,120% -10%,120% 36%,60% 36%,50% 68%,34% 68%,28% 110%,-20% 110%)}
+/* Bụi sao trôi trong vùng hồng tím của LE (mỗi lớp dịch đúng bằng kích thước ô nên lặp liền mạch) */
+@keyframes cosmicDust{
+  0%{background-position:0 0,0 0,0 0,0 0,0 0,0 0}
+  100%{background-position:40px -40px,-50px -50px,35px -35px,-60px -60px,30px -30px,0 0}
+}
+/* Vệt sáng chạy dọc viền chữ TARI và LE */
+.hero h1 span:nth-child(1)::after,.hero h1 span:nth-child(2) i::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;height:100%;
+  color:transparent;-webkit-text-fill-color:transparent;-webkit-text-stroke:2px #fff;pointer-events:none;
+  -webkit-mask-image:linear-gradient(110deg,transparent 35%,#000 50%,transparent 65%);mask-image:linear-gradient(110deg,transparent 35%,#000 50%,transparent 65%);
+  -webkit-mask-size:250% 100%;mask-size:250% 100%;animation:borderSweep 3.5s linear infinite}
+.hero h1 span:nth-child(1)::after{filter:drop-shadow(0 0 8px #00F5FF)}
+.hero h1 span:nth-child(2) i::after{filter:drop-shadow(0 0 8px #FF1E8E)}
+.hero h1 span:nth-child(2) i:nth-child(2)::after{animation-delay:.25s}
+@keyframes borderSweep{
+  0%{-webkit-mask-position:150% 0;mask-position:150% 0}
+  100%{-webkit-mask-position:-50% 0;mask-position:-50% 0}
+}
 @keyframes in{to{opacity:1;transform:none}}
 .tag{position:relative;margin:22px 0 28px;font-family:var(--disp);font-style:italic;font-weight:700;font-size:clamp(1.1rem,3vw,1.7rem);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);opacity:0;animation:in .8s .7s forwards}
 
