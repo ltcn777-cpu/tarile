@@ -31,11 +31,15 @@ main,footer{position:relative;z-index:1}
 @keyframes flow{to{background-position:200% 0}}
 
 /* Logo: TARI LE + WSB màu trắng; cứ vài giây glitch rồi đổi thành WASABI xanh lá, sau đó glitch về lại */
-.logo{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1.1;justify-content:center;padding:6px 0;cursor:pointer;user-select:none;animation:slideR .9s .2s cubic-bezier(.2,.9,.3,1) both}
+.logo{display:inline-flex;flex-direction:row;align-items:center;gap:12px;line-height:1.1;padding:6px 0;cursor:pointer;user-select:none;animation:slideR .9s .2s cubic-bezier(.2,.9,.3,1) both}
 @keyframes slideR{from{opacity:0;transform:translateX(-40px)}}
 .logo b,.logo small{position:relative;isolation:isolate;transform-origin:left center;transition:color .35s,text-shadow .35s}
 .logo b{font-family:'Chakra Petch','Be Vietnam Pro',system-ui,sans-serif;font-weight:700;font-size:clamp(1.4rem,2.8vw,1.65rem);letter-spacing:.1em;color:#FFFFFF;text-transform:uppercase}
 .logo small{margin-top:4px;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:600;font-size:.72rem;letter-spacing:.3em;color:rgba(255,255,255,.65)}
+.logo-img{flex:none;width:44px;height:44px;object-fit:cover;background:#fff;padding:3px;border-radius:8px;border:1.5px solid var(--cyan);box-shadow:0 0 12px rgba(0,229,255,.4);transition:border-color .35s,box-shadow .35s}
+.lt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.1}
+.logo.is-wasabi .logo-img{border-color:#76FF03;box-shadow:0 0 12px rgba(118,255,3,.5)}
+@media (max-width:420px){.logo{gap:9px}.logo-img{width:38px;height:38px}}
 .logo.is-wasabi b{color:var(--cyan);text-shadow:0 0 12px rgba(0,229,255,.6)}
 .logo.is-wasabi small{color:#76FF03;text-shadow:0 0 12px rgba(118,255,3,.7)}
 .logo:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
