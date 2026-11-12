@@ -57,3 +57,14 @@ if(arW&&arC){
   });
   arW.addEventListener('mouseleave',function(){arC.style.transform='rotateX(0deg) rotateY(0deg)'});
 }
+
+/* MY INTERESTS: nghiêng 3D theo chuột + ánh sáng phản chiếu */
+[].slice.call(document.querySelectorAll('.card.i3d')).forEach(function(card){
+  card.addEventListener('mousemove',function(e){
+    var r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+    var rx=((y-r.height/2)/(r.height/2))*-12,ry=((x-r.width/2)/(r.width/2))*12;
+    card.style.setProperty('--mx',x+'px');card.style.setProperty('--my',y+'px');
+    card.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) scale3d(1.03,1.03,1.03)';
+  });
+  card.addEventListener('mouseleave',function(){card.style.transform='rotateX(0deg) rotateY(0deg) scale3d(1,1,1)'});
+});

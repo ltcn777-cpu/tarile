@@ -255,3 +255,14 @@ section.s.about{background-color:rgba(7,9,19,.72);background-image:radial-gradie
 .ar-card dl{position:relative;display:grid;grid-template-columns:110px 1fr;gap:15px 12px;margin:0}
 .ar-card dt{color:var(--muted);font-size:.9rem}.ar-card dd{margin:0;font-weight:600;color:#fff}
 .ar-card dd.hl{font-family:var(--disp);letter-spacing:.06em;color:var(--cyan)}
+
+/* ---------- MY INTERESTS: thẻ 3D ---------- */
+.ig{perspective:1200px}
+.card.i3d{position:relative;min-height:225px;cursor:pointer;transform-style:preserve-3d;transition:transform .15s ease-out,box-shadow .3s,border-color .3s}
+.card.i3d:hover{transform:none;border-color:var(--c);box-shadow:0 20px 40px -10px rgba(0,0,0,.7),0 0 25px rgba(0,229,255,.25);box-shadow:0 20px 40px -10px rgba(0,0,0,.7),0 0 25px color-mix(in srgb,var(--c) 40%,transparent)}
+.card.i3d::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.14),transparent 60%)}
+.card.i3d:hover::before{opacity:1}
+.card.i3d .ico{display:inline-block;transform:translateZ(35px);animation:float3D 3.5s ease-in-out infinite}
+.card.i3d h4{transform:translateZ(25px)}
+.card.i3d p{transform:translateZ(15px)}
+@keyframes float3D{0%,100%{transform:translateZ(35px) translateY(0)}50%{transform:translateZ(45px) translateY(-5px)}}
