@@ -154,10 +154,18 @@ nav a.off:active{transform:none}
 .cta:hover,.cta:focus-visible{transform:translateX(8px);background:var(--cyan);color:#060814;box-shadow:0 0 28px rgba(0,229,255,.5)}
 .cta:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
-/* Thanh chữ chạy: nền đen xanh, chữ cyan, chạy chậm */
-.marquee{position:absolute;left:0;right:0;bottom:0;overflow:hidden;background:#0A0E1A;color:var(--cyan);border-top:1px solid #00E5FF55}
-.marquee div{display:flex;width:max-content;animation:mq 30s linear infinite}
-.marquee span{padding:10px 26px;font-family:var(--disp);font-style:italic;font-weight:800;font-size:1.15rem;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+/* Thanh chữ chạy: kính mờ, viền cyan trên - hồng dưới, chữ xen kẽ đặc / rỗng / hồng, có ký hiệu phân cách */
+.marquee{position:absolute;left:0;right:0;bottom:0;overflow:hidden;padding:12px 0;
+  background:linear-gradient(90deg,rgba(10,14,26,.85) 0%,rgba(26,11,46,.75) 50%,rgba(10,14,26,.85) 100%);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border-top:1px solid rgba(0,229,255,.45);border-bottom:1px solid rgba(255,30,142,.45);box-shadow:0 -5px 20px rgba(0,229,255,.1);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.marquee div{display:flex;align-items:center;width:max-content;animation:mq 40s linear infinite;transition:filter .3s}
+.marquee span{padding:0 16px;font-family:'Chakra Petch','Be Vietnam Pro',system-ui,sans-serif;font-style:italic;font-weight:700;font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;color:var(--cyan)}
+.marquee .o{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.85)}
+.marquee .pk{color:#FF2A85;text-shadow:0 0 10px rgba(255,42,133,.5)}
+.marquee .sep{padding:0 6px;font-style:normal;font-size:.85rem;color:rgba(255,255,255,.4);-webkit-text-stroke:0;text-shadow:none}
+.marquee:hover div{animation-play-state:paused;filter:brightness(1.35)}
 @keyframes mq{to{transform:translateX(-50%)}}
 
 /* ---------- SECTIONS ---------- */
