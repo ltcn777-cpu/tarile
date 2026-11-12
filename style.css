@@ -107,12 +107,12 @@ nav a.off:active{transform:none}
   animation:float 18s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(22px,-26px)}}
 
-.hero h1{position:relative;margin:0;font-family:var(--disp);font-style:italic;font-weight:800;font-size:clamp(4.5rem,19vw,13rem);line-height:.88;text-transform:uppercase;letter-spacing:.02em}
+.hero h1{position:relative;margin:0;font-family:'Chakra Petch','Be Vietnam Pro',system-ui,sans-serif;font-style:italic;font-weight:700;font-size:clamp(4rem,16vw,11rem);line-height:.92;text-transform:uppercase;letter-spacing:.03em}
 .hero h1 span{display:block;opacity:0;transform:translateX(-80px) skewX(-10deg);animation:in .9s cubic-bezier(.2,.9,.3,1) forwards}
-.hero h1 span:nth-child(1){color:#0077FF;-webkit-text-stroke:6px #fff;paint-order:stroke fill;filter:drop-shadow(0 0 22px rgba(0,119,255,.5))}
-.hero h1 span:nth-child(2){color:transparent;-webkit-text-stroke:3px #FF007F;animation:in .9s .2s cubic-bezier(.2,.9,.3,1) forwards,glow 6s 1.5s ease-in-out infinite;filter:drop-shadow(0 0 5px #FF007F) drop-shadow(0 0 15px #FF007F) drop-shadow(0 0 30px rgba(255,0,127,.5))}
+.hero h1 span:nth-child(1){background:linear-gradient(180deg,#00F5FF 0%,#0066FF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.85);filter:drop-shadow(0 8px 20px rgba(0,102,255,.45))}
+.hero h1 span:nth-child(2){color:transparent;-webkit-text-stroke:2.5px #FF1E8E;animation:in .9s .2s cubic-bezier(.2,.9,.3,1) forwards,glow 6s 1.5s ease-in-out infinite;filter:drop-shadow(0 0 2px rgba(255,255,255,.8)) drop-shadow(0 0 12px rgba(255,30,142,.8)) drop-shadow(0 0 28px rgba(157,78,221,.6))}
 @keyframes in{to{opacity:1;transform:none}}
-@keyframes glow{0%,100%{filter:drop-shadow(0 0 4px #FF007F) drop-shadow(0 0 12px #FF007F) drop-shadow(0 0 24px rgba(255,0,127,.4))}50%{filter:drop-shadow(0 0 6px #FF007F) drop-shadow(0 0 20px #FF007F) drop-shadow(0 0 40px rgba(255,0,127,.65))}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 2px rgba(255,255,255,.8)) drop-shadow(0 0 10px rgba(255,30,142,.7)) drop-shadow(0 0 24px rgba(157,78,221,.5))}50%{filter:drop-shadow(0 0 2px rgba(255,255,255,.9)) drop-shadow(0 0 16px rgba(255,30,142,.95)) drop-shadow(0 0 36px rgba(157,78,221,.75))}}
 .tag{position:relative;margin:22px 0 28px;font-family:var(--disp);font-style:italic;font-weight:700;font-size:clamp(1.1rem,3vw,1.7rem);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);opacity:0;animation:in .8s .7s forwards}
 
 /* Nút Khám phá: nền trong suốt, viền cyan; rê chuột mới đầy màu */
