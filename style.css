@@ -124,10 +124,10 @@ nav a.off:active{transform:none}
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;-webkit-text-stroke:1.5px #FF47A3;
   filter:drop-shadow(0 0 8px rgba(255,30,142,.55))}
 /* Chữ L: thân đứng tím hồng từ đỉnh xuống đáy, đuôi ngang bên phải là glass */
-.hero h1 span:nth-child(2) i:nth-child(1)::before{clip-path:polygon(-20% -10%,76% -10%,38% 110%,-20% 110%)}
+.hero h1 span:nth-child(2) i:nth-child(1)::before{clip-path:polygon(-20% -10%,91% -10%,53% 110%,-20% 110%)}
 /* Chữ E: nét 1 (trên) full tím hồng; nét 2 (giữa) nửa trái tím hồng; thân dọc bên trái tím hồng xuống tới đáy; nét 3 (dưới) glass */
 .hero h1 span:nth-child(2) i:nth-child(2){padding-right:18px}
-.hero h1 span:nth-child(2) i:nth-child(2)::before{clip-path:polygon(-20% -10%,120% -10%,120% 36%,64% 36%,54% 68%,38% 68%,31% 110%,-20% 110%)}
+.hero h1 span:nth-child(2) i:nth-child(2)::before{clip-path:polygon(-20% -10%,120% -10%,120% 36%,52% 36%,42% 68%,34% 68%,28% 110%,-20% 110%)}
 @keyframes in{to{opacity:1;transform:none}}
 .tag{position:relative;margin:22px 0 28px;font-family:var(--disp);font-style:italic;font-weight:700;font-size:clamp(1.1rem,3vw,1.7rem);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);opacity:0;animation:in .8s .7s forwards}
 
