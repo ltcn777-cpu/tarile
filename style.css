@@ -110,14 +110,11 @@ nav a.off:active{transform:none}
 .hero h1{position:relative;margin:0;font-family:'Chakra Petch','Be Vietnam Pro',system-ui,sans-serif;font-style:italic;font-weight:700;font-size:clamp(4rem,16vw,11rem);line-height:.92;text-transform:uppercase;letter-spacing:.03em}
 .hero h1 span{display:block;opacity:0;transform:translateX(-80px) skewX(-10deg);animation:in .9s cubic-bezier(.2,.9,.3,1) forwards}
 .hero h1 span:nth-child(1){background:linear-gradient(180deg,#00F5FF 0%,#0066FF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.85);filter:drop-shadow(0 8px 20px rgba(0,102,255,.45))}
-.hero h1 span:nth-child(2){display:inline-block;position:relative;font-family:'Orbitron','Chakra Petch',system-ui,sans-serif;font-weight:800;font-size:.86em;letter-spacing:.06em;
-  /* Cyber Glass: ruột kính mờ chuyển sắc hồng - tím, viền sắc, bóng khối lệch góc */
-  background:linear-gradient(135deg,rgba(255,0,127,.25) 0%,rgba(157,78,221,.35) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
-  -webkit-text-stroke:2px #FF2A85;
-  animation:in .9s .2s cubic-bezier(.2,.9,.3,1) forwards,glow 6s 1.5s ease-in-out infinite;
-  filter:drop-shadow(0 0 8px rgba(255,42,133,.7)) drop-shadow(4px 4px 0 rgba(138,43,226,.5))}
+.hero h1 span:nth-child(2){font-family:'Orbitron','Chakra Petch',system-ui,sans-serif;font-weight:800;font-size:.86em;letter-spacing:.06em;
+  /* Viền trắng bạc mảnh, rỗng ruột hoàn toàn, không bóng, không glow */
+  color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.85);filter:none;text-shadow:none;
+  animation:in .9s .2s cubic-bezier(.2,.9,.3,1) forwards}
 @keyframes in{to{opacity:1;transform:none}}
-@keyframes glow{0%,100%{filter:drop-shadow(0 0 8px rgba(255,42,133,.7)) drop-shadow(4px 4px 0 rgba(138,43,226,.5))}50%{filter:drop-shadow(0 0 16px rgba(255,42,133,.95)) drop-shadow(4px 4px 0 rgba(138,43,226,.5))}}
 .tag{position:relative;margin:22px 0 28px;font-family:var(--disp);font-style:italic;font-weight:700;font-size:clamp(1.1rem,3vw,1.7rem);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);opacity:0;animation:in .8s .7s forwards}
 
 /* Nút Khám phá: nền trong suốt, viền cyan; rê chuột mới đầy màu */
@@ -147,7 +144,6 @@ footer{padding:40px;text-align:center;color:var(--muted);font-size:.85rem;border
 @media (prefers-reduced-motion:reduce){
   #hd,.logo,nav a,.tag,.cta{animation:none;opacity:1}
   .hero h1 span{animation:none;opacity:1;transform:none}
-  .hero h1 span:nth-child(2){animation:glow 6s ease-in-out infinite}
   .slash{animation:shift 14s ease-in-out infinite alternate}
   .rv{opacity:1;transform:none;transition:none}
   .glitch-active{animation:none}
