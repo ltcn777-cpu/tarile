@@ -30,13 +30,18 @@ main,footer{position:relative;z-index:1}
 @keyframes hdIn{from{transform:translateY(-100%)}}
 @keyframes flow{to{background-position:200% 0}}
 
-/* Logo: chữ đứng, trắng; WSB trắng mờ, hai đầu khít với TARI LE; rê chuột thì phát sáng */
-.logo{--fs:clamp(1.45rem,3vw,1.9rem);display:inline-flex;flex-direction:column;line-height:1;padding:2px 0;cursor:pointer;animation:slideR .9s .2s cubic-bezier(.2,.9,.3,1) both}
+/* Logo: TARI LE (Syne) + WSB dính liền (Space Mono); rê chuột thì bung thành WASABI xanh lá */
+.logo{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1;padding:2px 0;cursor:pointer;user-select:none;animation:slideR .9s .2s cubic-bezier(.2,.9,.3,1) both}
 @keyframes slideR{from{opacity:0;transform:translateX(-40px)}}
-.logo b{font-family:'Montserrat','Be Vietnam Pro',system-ui,sans-serif;font-style:normal;font-weight:800;font-size:var(--fs);letter-spacing:.12em;color:#FFFFFF;text-transform:uppercase;transition:color .4s,text-shadow .4s}
-.logo small{display:flex;justify-content:space-between;padding-right:calc(var(--fs) * .12);margin-top:6px;font-family:'Montserrat','Be Vietnam Pro',system-ui,sans-serif;font-weight:700;font-size:.62rem;color:rgba(255,255,255,.5);transition:color .4s,text-shadow .4s}
-.logo:hover b,.logo:focus-visible b{color:var(--cyan);text-shadow:0 0 15px rgba(0,229,255,.6)}
-.logo:hover small,.logo:focus-visible small{color:#FF007F;text-shadow:0 0 10px rgba(255,0,127,.6)}
+.logo b{font-family:'Syne','Be Vietnam Pro',system-ui,sans-serif;font-weight:800;font-size:clamp(1.45rem,3vw,1.85rem);letter-spacing:.04em;color:#FFFFFF;text-transform:uppercase}
+.logo small{display:flex;align-items:center;margin-top:6px;font-family:'Space Mono',ui-monospace,monospace;font-weight:700;font-size:.82rem;letter-spacing:.12em;color:rgba(255,255,255,.55);transition:color .4s,text-shadow .4s}
+.logo small span{display:inline-block;line-height:1.2}
+.logo .hc{max-width:0;opacity:0;overflow:hidden;transform:translateY(6px);transition:max-width .45s cubic-bezier(.22,1,.36,1),opacity .3s,transform .4s}
+.logo:hover small,.logo:focus-visible small{color:#76FF03;text-shadow:0 0 12px rgba(118,255,3,.6)}
+.logo:hover .hc,.logo:focus-visible .hc{max-width:.85em;opacity:1;transform:none}
+.logo:hover .hc:nth-child(2),.logo:focus-visible .hc:nth-child(2){transition-delay:.05s}
+.logo:hover .hc:nth-child(4),.logo:focus-visible .hc:nth-child(4){transition-delay:.13s}
+.logo:hover .hc:nth-child(6),.logo:focus-visible .hc:nth-child(6){transition-delay:.21s}
 .logo:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
 
 nav{display:flex;gap:6px}
