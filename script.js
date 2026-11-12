@@ -113,3 +113,50 @@ if(phil){
   pqReset();
 }
 
+/* PERSONAL PROFILE: hiệu ứng giải mã chữ (Cyber Text Scramble) - chạy khi thẻ hiện ra và khi rê chuột vào từng dòng */
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.ar-card .sc'));
+  if(!els.length)return;
+  var CH='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789/#@$%&*',KEEP=/[\s,\/&.\-]/;
+  var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Tách chữ thật (cho trình đọc màn hình) và chữ hiển thị (bị xáo trộn) */
+  els.forEach(function(el){
+    var txt=el.getAttribute('data-text'),sr=document.createElement('span'),vis=document.createElement('span');
+    sr.className='sr';sr.textContent=txt;vis.className='vis';vis.setAttribute('aria-hidden','true');vis.textContent=txt;
+    el.textContent='';el.appendChild(sr);el.appendChild(vis);
+  });
+  function scramble(el){
+    if(still||el._run)return;
+    var vis=el.querySelector('.vis'),txt=el.getAttribute('data-text'),len=txt.length,dur=Math.min(800,380+len*12),t0=null,last=0;
+    el._run=true;el.style.height=el.offsetHeight+'px';el.classList.add('scr');
+    function step(t){
+      if(t0===null)t0=t;
+      var p=Math.min((t-t0)/dur,1);
+      if(t-last>=40||p===1){
+        last=t;
+        var k=Math.floor(p*len),s='',i,c;
+        for(i=0;i<len;i++){c=txt.charAt(i);s+=(i<k||KEEP.test(c))?c:CH.charAt(Math.floor(Math.random()*CH.length))}
+        vis.textContent=s;
+      }
+      if(p<1){requestAnimationFrame(step)}
+      else{vis.textContent=txt;el.classList.remove('scr');el.style.height='';el._run=false}
+    }
+    requestAnimationFrame(step);
+  }
+  /* Rê chuột vào dòng nào thì giải mã lại dòng đó */
+  els.forEach(function(el){
+    var host=el.closest('.pr,.ar-head');
+    if(host)host.addEventListener('mouseenter',function(){scramble(el)});
+  });
+  /* Lần đầu: khi thẻ cuộn tới thì chạy lần lượt từng dòng */
+  var wrap=document.getElementById('arWrap');
+  if(wrap&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      if(es[0].isIntersecting){
+        els.forEach(function(el,i){setTimeout(function(){scramble(el)},i*180)});
+        io.disconnect();
+      }
+    },{threshold:.4});
+    io.observe(wrap);
+  }
+})();

@@ -242,12 +242,22 @@ section.s.about{background-color:rgba(7,9,19,.72);background-image:radial-gradie
 .hud.tl{top:10px;left:10px;border-width:2px 0 0 2px}.hud.tr{top:10px;right:10px;border-width:2px 2px 0 0}
 .hud.bl{bottom:10px;left:10px;border-width:0 0 2px 2px}.hud.br{bottom:10px;right:10px;border-width:0 2px 2px 0}
 .ar-head{position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(0,240,255,.25)}
-.ar-head h4{margin:0;font-family:var(--disp);font-size:1.15rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan)}
-.ar-head span{padding:3px 8px;border:1px solid var(--cyan);border-radius:4px;background:rgba(0,240,255,.1);font-family:var(--disp);font-size:.72rem;color:var(--cyan);animation:pulse 2s infinite}
+.ar-head h4{margin:0;font-family:var(--disp);font-size:1.15rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);background:linear-gradient(110deg,#00E5FF 25%,#fff 48%,#00E5FF 70%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:arShimmer 3.2s linear infinite}
+@keyframes arShimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+.ar-head>span{padding:3px 8px;border:1px solid var(--cyan);border-radius:4px;background:rgba(0,240,255,.1);font-family:var(--disp);font-size:.72rem;color:var(--cyan);animation:pulse 2s infinite}
 @keyframes pulse{50%{opacity:.45}}
-.ar-card dl{position:relative;display:grid;grid-template-columns:110px 1fr;gap:15px 12px;margin:0}
-.ar-card dt{color:var(--muted);font-size:.9rem}.ar-card dd{margin:0;font-weight:600;color:#fff}
+.ar-card dl{position:relative;display:flex;flex-direction:column;gap:10px;margin:0}
+.ar-card .pr{display:grid;grid-template-columns:110px 1fr;gap:12px;margin:0 -8px;padding:5px 8px;border-radius:6px;cursor:default;transition:background .25s ease}
+.ar-card .pr:hover{background:rgba(0,240,255,.07)}
+.ar-card dt{color:var(--muted);font-size:.9rem;transition:color .25s ease}
+.ar-card .pr:hover dt{color:var(--cyan)}
+.ar-card dd{position:relative;margin:0;font-weight:600;color:#fff;transition:transform .25s ease,color .25s ease,text-shadow .25s ease}
 .ar-card dd.hl{font-family:var(--disp);letter-spacing:.06em;color:var(--cyan)}
+.ar-card .pr:hover dd{transform:translateX(6px);color:var(--cyan);text-shadow:0 0 12px rgba(0,229,255,.5)}
+.sc.scr{overflow:hidden}
+.sc .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:520px){.ar-card .pr{grid-template-columns:1fr;gap:2px}}
+@media (prefers-reduced-motion:reduce){.ar-head h4{animation:none;-webkit-text-fill-color:currentColor;background:none}.ar-card dd,.ar-card .pr{transition:none}}
 
 /* ---------- MY INTERESTS: thẻ 3D ---------- */
 .ig{perspective:1200px}
