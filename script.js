@@ -68,3 +68,48 @@ if(arW&&arC){
   });
   card.addEventListener('mouseleave',function(){card.style.transform='rotateX(0deg) rotateY(0deg) scale3d(1,1,1)'});
 });
+
+/* CURRENTLY WORKING ON: ánh sáng quét viền theo con trỏ + giải mã chữ */
+var pjG=document.getElementById('pjGrid');
+if(pjG){
+  var pjs=[].slice.call(pjG.querySelectorAll('.pj'));
+  pjG.addEventListener('mousemove',function(e){pjs.forEach(function(c){var r=c.getBoundingClientRect();c.style.setProperty('--x',(e.clientX-r.left)+'px');c.style.setProperty('--y',(e.clientY-r.top)+'px')})});
+  pjs.forEach(function(c){
+    var el=c.querySelector('.dec'),t=el.textContent,sym='01<>/#$%&*';
+    c.addEventListener('mouseenter',function(){
+      clearInterval(el._d);var i=0;
+      el._d=setInterval(function(){
+        el.textContent=t.split('').map(function(ch,k){return(k<i||ch===' '||ch==='·')?ch:sym.charAt(Math.floor(Math.random()*sym.length))}).join('');
+        if(i>=t.length){clearInterval(el._d);el.textContent=t}
+        i+=1.2;
+      },30);
+    });
+  });
+}
+/* Triết lý: 3 câu tự luân phiên */
+var PQ=[
+ {en:'“Without seeing reality clearly, wealth, kindness, and subtlety all become useless.”',tag:'Tari Le // Strategic Vision 01',vi:'“Không Nhìn Rõ Thực Tế — Kinh Tế, Tử Tế, Tinh Tế Cũng Trở Nên Vô Dụng.”',desc:'Tư duy cốt lõi trong điều hành và sáng tạo: mọi nguồn lực hay sự khéo léo đều chỉ phát huy giá trị khi được đặt trên nền tảng nhìn nhận đúng bản chất thực tế.'},
+ {en:'“Don’t exaggerate what you hear, and never grow lazy when pressure rises.”',tag:'Tari Le // Core Discipline 02',vi:'“Đừng Nghe 1 Kể 10 — Đừng Thấy Ngột Ngạt Mà Lười.”',desc:'Giữ sự chuẩn xác trong từng thông tin và duy trì kỷ luật trước áp lực cao: bản lĩnh tạo nên khác biệt trong môi trường cạnh tranh.'},
+ {en:'“Never trade a lifetime of peace for a fleeting moment of comfort.”',tag:'Tari Le // Long-Term Mindset 03',vi:'“Đừng Vì Sung Sướng Nhất Thời Mà Làm Đau Khổ Cả Đời.”',desc:'Tập trung vào giá trị bền vững thay vì những cám dỗ ngắn hạn. Mỗi lựa chọn kỷ luật hôm nay là nền móng vững chắc cho tương lai.'}
+];
+var phil=document.getElementById('phil');
+if(phil){
+  var pqBox=document.getElementById('philQ'),pqPills=[].slice.call(phil.querySelectorAll('.pq-pill')),pqI=0,pqT;
+  function pqShow(i){
+    pqBox.classList.add('out');
+    setTimeout(function(){
+      var q=PQ[i];
+      document.getElementById('pqEn').textContent=q.en;document.getElementById('pqTag').textContent=q.tag;
+      document.getElementById('pqVi').textContent=q.vi;document.getElementById('pqDesc').textContent=q.desc;
+      document.getElementById('pqCnt').textContent='0'+(i+1)+' / 03';
+      pqPills.forEach(function(p,k){p.classList.toggle('on',k===i)});
+      pqBox.classList.remove('out');
+    },300);
+  }
+  function pqReset(){clearInterval(pqT);pqT=setInterval(function(){pqI=(pqI+1)%PQ.length;pqShow(pqI)},5500)}
+  pqPills.forEach(function(p,k){p.addEventListener('click',function(){pqI=k;pqShow(k);pqReset()})});
+  phil.addEventListener('mouseenter',function(){clearInterval(pqT)});
+  phil.addEventListener('mouseleave',pqReset);
+  pqReset();
+}
+
