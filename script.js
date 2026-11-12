@@ -43,3 +43,17 @@ function glitchSwap(){
   setTimeout(function(){bT.classList.remove('glitch-active');bS.classList.remove('glitch-active')},400);
 }
 setInterval(glitchSwap,4000);
+
+/* Khung tiêu đề: viền chạy sáng khi lướt tới */
+var tf=document.getElementById('titleFrame');
+if(tf){new IntersectionObserver(function(es){es.forEach(function(e){tf.classList.toggle('in-view',e.isIntersecting)})},{threshold:.3}).observe(tf)}
+/* Thẻ Profile: nghiêng 3D theo con trỏ chuột */
+var arW=document.getElementById('arWrap'),arC=document.getElementById('arCard');
+if(arW&&arC){
+  arW.addEventListener('mousemove',function(e){
+    var r=arW.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+    var rx=((y-r.height/2)/(r.height/2))*-8,ry=((x-r.width/2)/(r.width/2))*8;
+    arC.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';
+  });
+  arW.addEventListener('mouseleave',function(){arC.style.transform='rotateX(0deg) rotateY(0deg)'});
+}
