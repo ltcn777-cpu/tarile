@@ -160,3 +160,95 @@ if(phil){
     io.observe(wrap);
   }
 })();
+
+/* ===== TRANG 02: QUÂN ĐOÀN UZI ===== */
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  if(!$('uzUnits'))return;
+  function fill(id,arr,fn){$(id).innerHTML=arr.map(fn).join('')}
+  var GAMES=['Free Fire','Liên Quân','PUBG','Play Together','FC Mobile VN'];
+  /* Sửa ngày thành lập ở đây */
+  var UNITS=[
+    ['Quân Đoàn','Free Fire','#FFB300','00/00/2026','Quân Đoàn UZI bên Free Fire'],
+    ['Clan','Liên Quân Mobile','#00E5FF','00/00/2026','Clan UZI bên Liên Quân'],
+    ['Hội','PUBG','#76FF03','00/00/2026','Hội UZI bên PUBG'],
+    ['Hội Nhóm','Play Together','#FF2A85','00/00/2026','Hội Nhóm UZI bên Play Together'],
+    ['Liên Đoàn','FC Mobile VN','#C084FC','00/00/2026','Liên Đoàn UZI bên FC Mobile VN']];
+  fill('uzUnits',UNITS,function(u){return '<article class="card" style="--c:'+u[2]+'"><small>'+u[1]+'</small><h4>'+u[0]+' UZI</h4><p>'+u[4]+'</p><span class="d">THÀNH LẬP // '+u[3]+'</span></article>'});
+  fill('uzFam',[
+    ['#00E5FF','◎','Mục tiêu','Xây dựng một gia đình game thủ văn minh, đoàn kết, có tổ chức và có bản sắc riêng.'],
+    ['#FF2A85','➜','Mong muốn tương lai','Phát triển thêm nhiều giải đấu, sự kiện offline và mở rộng sang các tựa game mới.'],
+    ['#C084FC','⌬','Kết nối','Gắn kết nhiều quân đoàn, nhiều lĩnh vực: game, âm nhạc, công nghệ và học tập.']],
+    function(c){return '<article class="card" style="--c:'+c[0]+'"><i class="ico">'+c[1]+'</i><h4>'+c[2]+'</h4><p>'+c[3]+'</p></article>'});
+  /* Sự kiện mẫu: [ngày, nội dung, nhãn, màu] */
+  fill('uzEvents',[
+    ['00.2026','Lễ ra mắt Quân Đoàn UZI','KHỞI ĐẦU','#ff2a85'],
+    ['00.2026','Giao lưu cuối tuần giữa các quân đoàn','ONLINE','#00f0ff'],
+    ['00.2026','Gặp mặt offline, check-in cùng anh em','OFFLINE','#10b981'],
+    ['00.2026','Mini game nội bộ có quà','MINIGAME','#a855f7']],
+    function(e){return '<li class="up-row" style="--rc:'+e[3]+';--rg:color-mix(in srgb,'+e[3]+' 14%,transparent);--dc:#00f0ff"><span class="up-node"><i class="up-dot"></i></span><time class="up-date">'+e[0]+'</time><span class="up-text">'+e[1]+'</span><b class="up-badge">'+e[2]+'</b></li>'});
+  /* Video trend: [tiêu đề, nền tảng, link giả] */
+  fill('uzVids',[
+    ['Video đú trend #1','TikTok','https://example.com/video-1'],
+    ['Video đú trend #2','TikTok','https://example.com/video-2'],
+    ['Video đú trend #3','YouTube Shorts','https://example.com/video-3']],
+    function(v){return '<a class="uz-vid" href="'+v[2]+'" target="_blank" rel="noopener"><div class="uz-th">▶</div><b>'+v[0]+'</b><small>'+v[1]+' // link tạm</small></a>'});
+  fill('uzOther',[
+    ['Giải đấu khác #1','Tên giải · Kết quả · Năm'],
+    ['Giải đấu khác #2','Tên giải · Kết quả · Năm'],
+    ['Giải đấu khác #3','Tên giải · Kết quả · Năm']],
+    function(t){return '<article class="card" style="--c:#C084FC"><small>ĐÃ THAM GIA</small><h4>'+t[0]+'</h4><p>'+t[1]+'</p></article>'});
+  fill('uzAch',[['Thành tích #1','Cập nhật thành tích thật'],['Thành tích #2','Cập nhật thành tích thật'],['Thành tích #3','Cập nhật thành tích thật']],
+    function(t){return '<article class="card" style="--c:#FFB300"><i class="ico">★</i><h4>'+t[0]+'</h4><p>'+t[1]+'</p></article>'});
+
+  /* Luật & quyền lợi (bản nháp, sửa theo luật thật) */
+  var RULES={
+    'Luật Quân Đoàn':['Tôn trọng mọi thành viên, không chửi bậy, không công kích cá nhân.','Đổi tên theo quy định của quân đoàn khi vào nhóm.','Không dùng phần mềm gian lận, không phá hoại giải đấu.','Hoạt động đều đặn, báo trước khi vắng lâu.','Nghe theo điều hành của quản trị viên.'],
+    'Luật Luyện Phòng':['Vào phòng đúng giờ hẹn, đủ người mới bắt đầu.','Giữ liên lạc trong trận, không troll đồng đội.','Không rời phòng giữa chừng khi chưa báo.','Thua thì rút kinh nghiệm, không đổ lỗi.'],
+    'Quyền Lợi Thành Viên':['Được tham gia mọi sự kiện, giải đấu nội bộ của quân đoàn.','Được tích Danh Dự theo hoạt động và thành tích.','Được giao lưu, luyện tập cùng các quân đoàn anh em.','Được hỗ trợ, góp ý và đề xuất ý tưởng cho cộng đồng.']};
+  var tabs=$('uzTabs'),pane=$('uzPane');
+  Object.keys(RULES).forEach(function(k,i){
+    var b=document.createElement('button');b.type='button';b.textContent=k;b.setAttribute('role','tab');
+    b.onclick=function(){[].slice.call(tabs.children).forEach(function(x){x.classList.toggle('on',x===b)});
+      pane.innerHTML='<ol>'+RULES[k].map(function(r){return '<li>'+r+'</li>'}).join('')+'</ol><p class="uz-note">Bản nháp, sẽ thay bằng luật chính thức.</p>'};
+    tabs.appendChild(b);if(!i)b.onclick();
+  });
+
+  /* Bản đồ: bấm để cắm cờ */
+  var svg=$('uzSvg'),mine=$('uzMine'),KEY='uziPins',pins=[];
+  function esc(s){return String(s).replace(/[&<>"]/g,'')}
+  function flag(p,c){return '<g class="pin" transform="translate('+p[0]+','+p[1]+')"><line y2="-24" stroke="#fff" stroke-width="2"/><path d="M0-24L17-18L0-12Z" fill="'+c+'"/><circle r="3.5" fill="'+c+'"/><text class="pl" x="8" y="10">'+esc(p[2])+'</text></g>'}
+  $('uzSample').innerHTML=[[172,72,'Hà Nội (mẫu)'],[205,372,'Đà Nẵng (mẫu)'],[170,548,'TP.HCM (mẫu)'],[122,592,'Cần Thơ (mẫu)']].map(function(p){return flag(p,'#FF2A85')}).join('');
+  try{pins=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){pins=[]}
+  function draw(){mine.innerHTML=pins.map(function(p){return flag(p,'#FFB300')}).join('');$('uzCnt').textContent=pins.length+' cờ do bạn cắm';try{localStorage.setItem(KEY,JSON.stringify(pins))}catch(e){}}
+  svg.addEventListener('click',function(e){
+    var pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;var q=pt.matrixTransform(svg.getScreenCTM().inverse());
+    var n=prompt('Tên địa điểm check-in (ví dụ: Cần Thơ - quán cà phê):');
+    if(n&&n.trim()){pins.push([Math.round(q.x),Math.round(q.y),n.trim().slice(0,30)]);draw()}
+  });
+  $('uzUndo').onclick=function(){pins.pop();draw()};
+  $('uzCopy').onclick=function(){var t=JSON.stringify(pins);if(navigator.clipboard)navigator.clipboard.writeText(t);$('uzCnt').textContent='Đã sao chép '+pins.length+' cờ'};
+  draw();
+
+  /* Danh sách 250 thành viên: 30 tên giả + 220 ô trống. Sửa trực tiếp mảng MEM: [tên, danh dự, game, thời gian vào] */
+  var NM='UZI•Rồng Lửa|Bảo Kiên|Minh Phát|Hoàng Nam|Gia Huy|Thanh Tùng|Quốc Bảo|Đức Anh|Tuấn Kiệt|Nhật Minh|Khánh Duy|Hữu Phước|Trọng Nghĩa|Anh Khoa|Thiên Ân|Việt Hưng|Công Danh|Phúc Lâm|Ngọc Sơn|Mạnh Cường|Tấn Lộc|Hải Đăng|Trí Dũng|Bảo Long|Quang Vinh|Đăng Khôi|Xuân Bách|Thế Vĩ|Kim Ngân|Lan Anh'.split('|');
+  var MEM=NM.map(function(n,i){return [n,Math.max(100,2500-i*73),GAMES[i%5],(i%12+1)+'/2026']});
+  var TOTAL=250,body=document.querySelector('#uzTbl tbody'),sel=$('uzG'),qi=$('uzQ');
+  sel.innerHTML='<option value="">Tất cả game</option>'+GAMES.map(function(g){return '<option>'+g+'</option>'}).join('');
+  function render(){
+    var q=qi.value.trim().toLowerCase(),g=sel.value,rows='',shown=0,i,m;
+    for(i=0;i<TOTAL;i++){
+      m=MEM[i];
+      if(q||g){if(!m||(q&&m[0].toLowerCase().indexOf(q)<0)||(g&&m[2]!==g))continue}
+      shown++;
+      rows+='<tr'+(m?'':' class="em"')+'><td>'+('00'+(i+1)).slice(-3)+'</td>'+(m?'<td>'+m[0]+'</td><td>'+m[1].toLocaleString('vi-VN')+'</td><td>'+m[2]+'</td><td>'+m[3]+'</td>':'<td>—</td><td>—</td><td>—</td><td>—</td>')+'</tr>';
+    }
+    body.innerHTML=rows||'<tr><td colspan="5">Không tìm thấy thành viên phù hợp.</td></tr>';
+    $('uzMc').textContent=MEM.length+' / '+TOTAL+' đã điền'+((q||g)?' · '+shown+' kết quả':'');
+  }
+  qi.addEventListener('input',render);sel.addEventListener('change',render);render();
+
+  /* Viền tiêu đề chạy sáng */
+  var tf2=document.querySelector('.uzi .title-frame');
+  if(tf2)new IntersectionObserver(function(es){es.forEach(function(e){tf2.classList.toggle('in-view',e.isIntersecting)})},{threshold:.3}).observe(tf2);
+})();
