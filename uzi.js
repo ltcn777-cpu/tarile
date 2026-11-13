@@ -1,11 +1,13 @@
 (function(){
 var $=function(i){return document.getElementById(i)},RM=matchMedia('(prefers-reduced-motion: reduce)').matches,GAMES=['Free Fire','Liên Quân','PUBG','Play Together','FC Mobile VN'];
-function fill(i,a,f){$(i).innerHTML=a.map(f).join('')}
+function fill(i,a,f){var el=$(i),k=el.querySelector('#fill');el.innerHTML=a.map(f).join('');if(k)el.insertBefore(k,el.firstChild)}
 function pad(n){return('00'+n).slice(-3)}
 /* Khối mẹ + 5 khối con: đổi tên file ảnh ở đây */
-var IMG='logo-uzi.jpg',KIDS=[['FF','unit-ff.jpg','QUÂN ĐOÀN UZI · FREE FIRE'],['LQ','unit-lq.jpg','CLAN UZI · LIÊN QUÂN'],['PUBG','unit-pubg.jpg','HỘI UZI · PUBG'],['PT','unit-pt.jpg','HỘI NHÓM UZI · PLAY TOGETHER'],['FC','unit-fc.jpg','LIÊN ĐOÀN UZI · FC MOBILE VN']];
+var KIDS=[['FF','unit-ff.jpg','QUÂN ĐOÀN UZI · FREE FIRE'],['LQ','unit-lq.jpg','CLAN UZI · LIÊN QUÂN'],['PUBG','unit-pubg.jpg','HỘI UZI · PUBG'],['PT','unit-pt.jpg','HỘI NHÓM UZI · PLAY TOGETHER'],['FC','unit-fc.jpg','LIÊN ĐOÀN UZI · FC MOBILE VN']];
+/* Mặt khối mẹ: logo (ảnh nhúng sẵn trong uzi.css) chia 3 lớp: biểu tượng / UZI / LEGENDS, mỗi lớp một hiệu ứng */
+function lg(){return '<span class="lg" aria-hidden="true"><i class="lb"></i>'+['a','b','c'].map(function(k){return '<span class="ly '+k+'"><i class="im"></i><i class="sh"></i></span>'}).join('')+'</span>'}
 function im(t,s){return '<span>'+t+'</span><img src="'+s+'" alt="" onload="this.previousSibling.remove()" onerror="this.remove()">'}
-$('stage').innerHTML='<div class="cube" id="cube">'+[0,1,2,3,4,5].map(function(){return '<div>'+im('UZI',IMG)+'</div>'}).join('')+'</div>'+KIDS.map(function(k,i){return '<div class="cc c'+(i+1)+'" data-n="'+k[2]+'" tabindex="0"><div class="cs"><div class="ck">'+[0,1,2,3,4,5].map(function(n){return '<div>'+(n?k[0]:im(k[0],k[1]))+'</div>'}).join('')+'</div></div></div>'}).join('');
+$('stage').innerHTML='<div class="cube" id="cube">'+[0,1,2,3,4,5].map(function(){return '<div>'+lg()+'</div>'}).join('')+'</div>'+KIDS.map(function(k,i){return '<div class="cc c'+(i+1)+'" data-n="'+k[2]+'" tabindex="0"><div class="cs"><div class="ck">'+[0,1,2,3,4,5].map(function(n){return '<div>'+(n?k[0]:im(k[0],k[1]))+'</div>'}).join('')+'</div></div></div>'}).join('');
 /* HERO: khối 3D xoay theo chuột + nhảy số */
 var cube=$('cube'),ry=25,rx=-20,tx=0,ty=0;
 $('hero').addEventListener('mousemove',function(e){var r=this.getBoundingClientRect();tx=((e.clientY-r.top)/r.height-.5)*-70;ty=((e.clientX-r.left)/r.width-.5)*160});
