@@ -43,42 +43,37 @@ function tg(o){sb.classList.toggle('open',o);so.classList.toggle('show',o);sb.se
 ob.onclick=function(){tg(!sb.classList.contains('open'))};document.getElementById('sbX').onclick=function(){tg(false)};so.onclick=function(){tg(false)};
 sb.addEventListener('click',function(e){var b=e.target.closest('.sga');if(b){var o=b.closest('.sg').classList.toggle('open');b.setAttribute('aria-expanded',o);return}if(e.target.closest('a'))tg(false)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))tg(false)});
-/* TIA SÉT BẠC BĂNG CHUYỀN: dòng điện trải suốt chiều ngang, trôi liên tục trái → phải, không bao giờ đứt.
-   Mỗi "khớp" của tia sét là một điểm có thật: nó được sinh ra ở mép trái rồi trượt sang phải cùng nhánh rẽ của nó. */
-var hd=document.getElementById('hd'),cv=document.createElement('canvas'),cx=cv.getContext('2d'),H=60,BY=30,W=0,dpr=1,sparks=[],last=0,
-still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* SÓNG PHỔ LĂNG KÍNH: dải sóng + hàng thanh equalizer chạy băng chuyền, màu trượt Bạc → Xanh băng → Tím điện, nhịp "beat" và hạt sáng bay lên từ đỉnh */
+var hd=document.getElementById('hd'),cv=document.createElement('canvas'),cx=cv.getContext('2d'),H=60,BY=30,W=0,dpr=1,t=0,last=0,pk=[],ps=[],
+still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,
+ST=[[0,[255,255,255]],[.25,[0,229,255]],[.5,[112,0,255]],[.75,[0,229,255]],[1,[255,255,255]]];
 cv.className='bolt';cv.setAttribute('aria-hidden','true');document.body.appendChild(cv);
 function R(a,b){return a+Math.random()*(b-a)}
-function jag(x1,y1,x2,y2,amp,d){var p=[[x1,y1],[x2,y2]],i,j,n;for(i=0;i<d;i++){n=[];for(j=0;j<p.length-1;j++){var a=p[j],b=p[j+1],dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1,o=R(-.5,.5)*amp;n.push(a,[(a[0]+b[0])/2-dy/l*o,(a[1]+b[1])/2+dx/l*o])}n.push(p[p.length-1]);p=n;amp*=.56}return p}
-/* Mỗi dải điện: step = khoảng cách giữa các khớp, amp = biên độ giật, sp = tốc độ px/giây, k = độ dày, bp = xác suất rẽ nhánh */
-var S=[{step:11,amp:13,sp:340,k:1,bp:.15,n:[],o:0},{step:17,amp:19,sp:240,k:.6,bp:.08,n:[],o:0}];
-function node(s,pv){var m=s.amp*1.15,y=(pv?pv.y*.3:0)+R(-1,1)*s.amp;y=Math.max(-m,Math.min(m,y));
- var nd={y:y,h:Math.random()<.03,b:null};
- if(Math.random()<s.bp){var l=Math.random()<.18?R(40,62):R(14,34),sg=Math.random()<.65?1:-1;nd.b=jag(0,0,R(.5,1)*l,sg*R(.25,1)*l,l*.55,3)}
- return nd}
-function fit(s){var need=Math.ceil(W/s.step)+3;while(s.n.length>need)s.n.pop();while(s.n.length<need)s.n.push(node(s,s.n[s.n.length-1]))}
-function place(){dpr=Math.min(window.devicePixelRatio||1,2);W=innerWidth;cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+'px';cv.style.top=(hd.getBoundingClientRect().bottom-BY)+'px';cx.setTransform(dpr,0,0,dpr,0,0);S.forEach(fit);if(still)draw(0)}
-function path(p){var i;cx.beginPath();cx.moveTo(p[0][0],p[0][1]);for(i=1;i<p.length;i++)cx.lineTo(p[i][0],p[i][1])}
-/* 3 lớp: hào quang rộng, vầng bạc, lõi trắng chói */
-function line(p,k,I){cx.lineJoin='round';cx.lineCap='round';
- path(p);cx.shadowBlur=0;cx.strokeStyle='rgba(110,160,255,'+.10*I+')';cx.lineWidth=11*k;cx.stroke();
- path(p);cx.strokeStyle='rgba(185,210,255,'+.30*I+')';cx.lineWidth=4.2*k;cx.stroke();
- path(p);cx.shadowColor='rgba(200,225,255,.95)';cx.shadowBlur=10;cx.strokeStyle='rgba(255,255,255,'+Math.min(1,.97*I)+')';cx.lineWidth=1.5*k;cx.stroke();cx.shadowBlur=0}
+function col(u){u=u-Math.floor(u);for(var i=1;i<ST.length;i++){if(u<=ST[i][0]){var a=ST[i-1],b=ST[i],f=(u-a[0])/(b[0]-a[0]);return[a[1][0]+(b[1][0]-a[1][0])*f,a[1][1]+(b[1][1]-a[1][1])*f,a[1][2]+(b[1][2]-a[1][2])*f]}}return ST[0][1]}
+function rgba(c,a){return'rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+','+a+')'}
+function place(){dpr=Math.min(window.devicePixelRatio||1,2);W=innerWidth;cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+'px';cv.style.top=(hd.getBoundingClientRect().bottom-BY)+'px';cx.setTransform(dpr,0,0,dpr,0,0);pk=[];if(still)draw(0)}
 function draw(dt){
- cx.clearRect(0,0,W,H);cx.globalCompositeOperation='lighter';
- var I=.88+R(0,.12);if(Math.random()<.05)I=1.3; /* thỉnh thoảng cả dòng điện chớp sáng mạnh */
- S.forEach(function(s){
-  s.o+=s.sp*dt;while(s.o>=s.step){s.o-=s.step;s.n.unshift(node(s,s.n[0]))}fit(s);
-  var pts=[],i,nd,x,y;
-  for(i=0;i<s.n.length;i++){nd=s.n[i];pts.push([(i-1)*s.step+s.o,BY+nd.y+R(-1,1)*1.4])}
-  line(pts,s.k,I);
-  for(i=0;i<s.n.length;i++){nd=s.n[i];x=pts[i][0];y=pts[i][1];
-   if(nd.b)line(nd.b.map(function(q){return[x+q[0],y+q[1]]}),s.k*.55,I*R(.45,1));
-   if(nd.h){cx.beginPath();cx.arc(x,y,2.6*s.k+.6,0,6.3);cx.fillStyle='rgba(255,255,255,'+Math.min(1,.9*I)+')';cx.shadowColor='#fff';cx.shadowBlur=14;cx.fill();cx.shadowBlur=0}}
-  if(s===S[0]&&Math.random()<.3){i=Math.floor(R(1,pts.length-1));sparks.push({x:pts[i][0],y:pts[i][1],vx:R(-1,2.6),vy:R(-1.8,1.2),l:1,d:R(.04,.09)})}});
- sparks=sparks.filter(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.12;p.l-=p.d;if(p.l<=0)return false;cx.fillStyle='rgba(225,238,255,'+p.l+')';cx.fillRect(p.x,p.y,1.6,1.6);return true});
+ t+=dt;cx.clearRect(0,0,W,H);cx.globalCompositeOperation='lighter';
+ var SP=7,n=Math.ceil(W/SP)+1,i,x,u,c,e,h,beat=Math.pow(Math.max(0,Math.sin(t*2.6)),8)*.45,flow=t*.07;
+ /* 1. Thanh equalizer: sóng lan từ trái sang phải, màu trượt cùng chiều */
+ for(i=0;i<n;i++){x=i*SP;e=Math.min(1,x/90,(W-x)/90);if(e<=0)continue;
+  h=2+16*(.5+.5*Math.sin(x*.021-t*2.4))*(.55+.45*Math.sin(x*.0065+t*.8))*(1+beat)+1.5*Math.sin(x*.19+t*9)*(.5+.5*Math.sin(t*3+i));h=Math.max(1.5,Math.min(h,26));
+  c=col(x/W*1.4-flow);
+  cx.lineCap='round';cx.lineWidth=4.5;cx.strokeStyle=rgba(c,.10*e);cx.beginPath();cx.moveTo(x,BY-h);cx.lineTo(x,BY+h);cx.stroke();
+  cx.lineWidth=1.6;cx.strokeStyle=rgba(c,.8*e);cx.beginPath();cx.moveTo(x,BY-h);cx.lineTo(x,BY+h);cx.stroke();
+  /* chấm đỉnh rơi chậm (peak hold) */
+  pk[i]=Math.max(h,(pk[i]||0)-.35);
+  cx.fillStyle='rgba(255,255,255,'+.9*e+')';cx.fillRect(x-.9,BY-pk[i]-3,1.8,1.8);
+  if(h>17&&ps.length<140&&Math.random()<.05)ps.push({x:x,y:BY-h-2,vx:R(.2,1.1),vy:R(-1.1,-.3),l:1,d:R(.012,.03),c:c})}
+ /* 2. Dải sóng sin chính, gradient trượt */
+ var g=cx.createLinearGradient(0,0,W,0),m=Math.ceil(W/40),k;for(k=0;k<=m;k++)g.addColorStop(k/m,rgba(col(k/m*1.4-flow),1));
+ function wave(){cx.beginPath();for(var X=0;X<=W;X+=3){var Y=BY+Math.sin(X*.015-t*1.7)*(5+3*beat)+Math.cos(X*.04+t*2.3)*2.4;X?cx.lineTo(X,Y):cx.moveTo(X,Y)}}
+ wave();cx.lineWidth=7;cx.strokeStyle=g;cx.globalAlpha=.16;cx.stroke();
+ wave();cx.lineWidth=2;cx.globalAlpha=1;cx.strokeStyle=g;cx.shadowColor='#00E5FF';cx.shadowBlur=12;cx.stroke();cx.shadowBlur=0;
+ /* 3. Hạt sáng tách khỏi đỉnh và tan dần */
+ ps=ps.filter(function(p){p.x+=p.vx;p.y+=p.vy;p.l-=p.d;if(p.l<=0)return false;cx.fillStyle=rgba(p.c,p.l);cx.fillRect(p.x,p.y,1.8,1.8);return true});
  cx.globalCompositeOperation='source-over'}
 function frame(now){requestAnimationFrame(frame);var dt=Math.min((now-last)/1000,.05);last=now;if(document.hidden)return;draw(dt)}
 place();addEventListener('resize',place);setTimeout(place,1000);if(window.ResizeObserver)new ResizeObserver(place).observe(hd);
-if(!still)requestAnimationFrame(function(t){last=t;frame(t)});
+if(!still)requestAnimationFrame(function(s){last=s;frame(s)});
 })();
