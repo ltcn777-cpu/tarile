@@ -11,7 +11,7 @@ var P=[
 ];
 var cur=location.pathname.split('/').pop()||'index.html';
 var nav=P.map(function(p,i){var on=p.f===cur;return p.h?'<a'+(on?' class="on"':'')+' href="'+p.h+'" style="--i:'+i+'"><i>'+p.n+'</i><span>'+p.t+'</span></a>':'<a class="off" aria-disabled="true" tabindex="-1" title="Sắp ra mắt" style="--i:'+i+'"><i>'+p.n+'</i><span>'+p.t+'</span></a>'}).join('');
-var side=P.map(function(p){var on=p.f===cur;if(!p.h)return '<span class="sl off"><b>'+p.n+'</b>'+p.t+'<em>Sắp ra mắt</em></span>';return '<a class="sl'+(on?' on':'')+'" href="'+p.h+'"><b>'+p.n+'</b>'+p.t+'</a>'+(p.s?p.s.map(function(s){return '<a class="ss" href="'+(on?'':p.f)+s[1]+'">'+s[0]+'</a>'}).join(''):'')}).join('');
+var side=P.map(function(p,i){var on=p.f===cur;if(!p.h)return '<span class="sl off"><b>'+p.n+'</b>'+p.t+'<em>Sắp ra mắt</em></span>';var a='<a class="sl'+(on?' on':'')+'" href="'+p.h+'"><b>'+p.n+'</b>'+p.t+'</a>';if(!p.s)return a;var id='sgm'+i;return '<div class="sg'+(on?' open cur':'')+'"><div class="sgr">'+a+'<button class="sga" type="button" aria-label="Mở hoặc đóng mục con của '+p.t+'" aria-expanded="'+on+'" aria-controls="'+id+'"><span>▾</span></button></div><div class="sgm" id="'+id+'"><div>'+p.s.map(function(s){return '<a class="ss" href="'+(on?'':p.f)+s[1]+'">'+s[0]+'</a>'}).join('')+'</div></div></div>'}).join('');
 var css='#hd{gap:14px}#hd::after{background:rgba(0,229,255,.22);animation:none}'
 +'.hl{display:flex;align-items:center;gap:16px}'
 +'.sbt{flex:none;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:40px;padding:0;border:1px solid rgba(0,229,255,.45);background:rgba(0,229,255,.1);cursor:pointer;clip-path:polygon(15% 0,100% 0,85% 100%,0 100%);transition:background .3s}'
@@ -29,13 +29,19 @@ var css='#hd{gap:14px}#hd::after{background:rgba(0,229,255,.22);animation:none}'
 +'a.sl:hover,a.sl:focus-visible,.sl.on{background:rgba(0,229,255,.12);border-left-color:#00E5FF;padding-left:20px;color:#fff;outline:none}'
 +'.sl.off{color:#64748b;cursor:not-allowed}.sl em{float:right;font-size:.7rem;font-style:normal;letter-spacing:.1em;color:#475569}'
 +'.ss{display:block;margin-left:22px;padding:7px 14px;font-size:.85rem;color:#94a3b8;border-left:1px solid rgba(0,229,255,.25);transition:all .2s}.ss:hover,.ss:focus-visible{color:#00E5FF;padding-left:20px;outline:none}'
++'.sgr{display:flex;align-items:stretch;gap:2px}.sgr .sl{flex:1}'
++'.sga{flex:none;width:46px;padding:0;border:0;background:rgba(255,255,255,.03);color:#00E5FF;font-size:.85rem;cursor:pointer;transition:background .2s,color .2s}.sga span{display:inline-block;transition:transform .3s}'
++'.sg.cur .sga{background:rgba(0,229,255,.12)}.sga:hover,.sga:focus-visible{background:#00E5FF;color:#05070D;outline:none}.sg.open .sga span{transform:rotate(180deg)}'
++'.sgm{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}.sg.open .sgm{grid-template-rows:1fr}'
++'.sgm>div{min-height:0;overflow:hidden;visibility:hidden;transition:visibility .3s}.sg.open .sgm>div{visibility:visible}'
++'.sgm .ss:first-child{margin-top:6px}.sgm .ss:last-child{margin-bottom:4px}'
 +'.sbf{padding-top:14px;border-top:1px solid rgba(255,255,255,.1);font-size:.75rem;color:#94a3b8}.sbf p{margin:0 0 4px}.sbf b{color:#00E5FF}'
-+'@media(prefers-reduced-motion:reduce){.beam{animation:none;left:35%}.sb,.sbo{transition:none}}';
++'@media(prefers-reduced-motion:reduce){.beam{animation:none;left:35%}.sb,.sbo,.sgm,.sga span{transition:none}}';
 var st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
 document.body.insertAdjacentHTML('afterbegin','<header id="hd"><div class="hl"><button class="sbt" id="sbOpen" type="button" aria-label="Mở thanh bên" aria-expanded="false" aria-controls="sb"><i></i><i></i><i></i></button><a class="logo" href="index.html" aria-label="TARI LE – WSB"><img class="logo-img" src="logo-tari%20le.jpg" alt="" width="44" height="44" decoding="async" onerror="this.style.display=\'none\'"><span class="lt"><b id="brandTitle" data-text="TARI LE">TARI LE</b><small id="brandSub" data-text="WSB">WSB</small></span></a></div><nav id="nav" aria-label="Menu chính">'+nav+'</nav><i class="beam"></i></header><div class="sbo" id="sbo"></div><aside class="sb" id="sb" aria-label="Thanh bên" aria-hidden="true"><div class="sbh"><span>SYSTEM // MENU</span><button id="sbX" type="button">✕ ĐÓNG</button></div><div class="sbl">'+side+'</div><div class="sbf"><p>TRẠNG THÁI: <b>● TRỰC TUYẾN</b></p><p>TARI LE // WSB NETWORK</p></div></aside>');
 var sb=document.getElementById('sb'),so=document.getElementById('sbo'),ob=document.getElementById('sbOpen');
 function tg(o){sb.classList.toggle('open',o);so.classList.toggle('show',o);sb.setAttribute('aria-hidden',!o);ob.setAttribute('aria-expanded',o);document.documentElement.style.overflow=o?'hidden':'';(o?document.getElementById('sbX'):ob).focus()}
 ob.onclick=function(){tg(!sb.classList.contains('open'))};document.getElementById('sbX').onclick=function(){tg(false)};so.onclick=function(){tg(false)};
-sb.addEventListener('click',function(e){if(e.target.closest('a'))tg(false)});
+sb.addEventListener('click',function(e){var b=e.target.closest('.sga');if(b){var o=b.closest('.sg').classList.toggle('open');b.setAttribute('aria-expanded',o);return}if(e.target.closest('a'))tg(false)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))tg(false)});
 })();
