@@ -1,17 +1,3 @@
-var nav=document.getElementById('nav'),bg=document.getElementById('bg');
-function setOpen(o){nav.classList.toggle('open',o);bg.classList.toggle('x',o);bg.setAttribute('aria-expanded',o);bg.setAttribute('aria-label',o?'Đóng menu':'Mở menu')}
-bg.addEventListener('click',function(){setOpen(!nav.classList.contains('open'))});
-var links=[].slice.call(nav.querySelectorAll('a'));
-/* Menu chỉ đổi mục sáng khi người dùng tự bấm, không tự chạy theo thanh cuộn */
-nav.addEventListener('click',function(e){
-  var a=e.target.closest('a');
-  if(!a)return;
-  if(a.classList.contains('off')){e.preventDefault();return}
-  links.forEach(function(l){l.classList.toggle('on',l===a)});
-  setOpen(false);
-});
-document.querySelector('.logo').addEventListener('click',function(){links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#gioi-thieu')})});
-
 /* Hiệu ứng hiện dần khi cuộn tới (không ảnh hưởng menu) */
 var rv=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}})},{threshold:.05});
 [].slice.call(document.querySelectorAll('section.s')).forEach(function(s){rv.observe(s)});
