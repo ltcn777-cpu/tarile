@@ -43,43 +43,41 @@ function tg(o){sb.classList.toggle('open',o);so.classList.toggle('show',o);sb.se
 ob.onclick=function(){tg(!sb.classList.contains('open'))};document.getElementById('sbX').onclick=function(){tg(false)};so.onclick=function(){tg(false)};
 sb.addEventListener('click',function(e){var b=e.target.closest('.sga');if(b){var o=b.closest('.sg').classList.toggle('open');b.setAttribute('aria-expanded',o);return}if(e.target.closest('a'))tg(false)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))tg(false)});
-/* DẢI LỤA ÁNH SÁNG (Aurora Silk): 3 dải lụa bạc-xanh-tím xoắn vào nhau, sao băng ánh sáng lướt dọc theo, bụi sáng trôi lơ lửng. Mượt, không gãy khúc. */
-var hd=document.getElementById('hd'),cv=document.createElement('canvas'),cx=cv.getContext('2d'),H=60,BY=30,W=0,dpr=1,t=0,last=0,mo=[],
+/* SÓNG PHỔ LĂNG KÍNH LẤP LÁNH (Holo-Spectrum Wave): dải sóng sin bạc-xanh băng-tím điện, vạch equalizer chạy băng chuyền, tia lửa li ti tách ra từ đỉnh sóng và sao 4 cánh nhấp nháy. Canvas thuần, nhẹ. */
+var hd=document.getElementById('hd'),cv=document.createElement('canvas'),cx=cv.getContext('2d'),H=60,BY=30,W=0,dpr=1,t=0,last=0,sp=[],gl=[],
 still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,
-ST=[[0,[255,255,255]],[.25,[0,229,255]],[.5,[130,60,255]],[.75,[0,229,255]],[1,[255,255,255]]],
-RB=[{A:6,f1:.011,s1:1.1,p:0,A2:2.6,f2:.027,s2:-1.6,T:9,f3:.008,s3:.9,q:0,a:.2},
-    {A:5,f1:.014,s1:-.9,p:2,A2:2.2,f2:.033,s2:1.3,T:7,f3:.011,s3:-.7,q:.33,a:.17},
-    {A:4,f1:.009,s1:1.5,p:4,A2:1.8,f2:.041,s2:-2,T:5.5,f3:.014,s3:1.2,q:.66,a:.15}],
-CM=[{sp:210,off:0,L:170},{sp:140,off:700,L:120}];
+ST=[[0,[255,255,255]],[.25,[0,229,255]],[.5,[130,60,255]],[.75,[0,229,255]],[1,[255,255,255]]];
 cv.className='bolt';cv.setAttribute('aria-hidden','true');document.body.appendChild(cv);
 function R(a,b){return a+Math.random()*(b-a)}
 function col(u){u=u-Math.floor(u);for(var i=1;i<ST.length;i++){if(u<=ST[i][0]){var a=ST[i-1],b=ST[i],f=(u-a[0])/(b[0]-a[0]);return[a[1][0]+(b[1][0]-a[1][0])*f,a[1][1]+(b[1][1]-a[1][1])*f,a[1][2]+(b[1][2]-a[1][2])*f]}}return ST[0][1]}
 function rgba(c,a){return'rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+','+a+')'}
 function place(){dpr=Math.min(window.devicePixelRatio||1,2);W=innerWidth;cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+'px';cv.style.top=(hd.getBoundingClientRect().bottom-BY)+'px';cx.setTransform(dpr,0,0,dpr,0,0);
- mo=[];for(var i=0;i<Math.max(18,Math.round(W/36));i++)mo.push({x:R(0,W),y:R(-20,20),r:R(.8,2.2),v:R(.2,.7),p:R(0,6.3),s:R(.8,2.2)});if(still)draw(0)}
-function yy(r,x,br){return BY+Math.sin(x*r.f1-t*r.s1+r.p)*r.A*br+Math.sin(x*r.f2-t*r.s2)*r.A2}
-function grad(q,al,flow){var g=cx.createLinearGradient(0,0,W,0),m=Math.ceil(W/40),k,e;for(k=0;k<=m;k++){e=Math.min(1,k/m*7,(1-k/m)*7);g.addColorStop(k/m,rgba(col(k/m*1.3-flow+q),al*e))}return g}
+ sp=[];gl=[];for(var i=0;i<Math.max(8,Math.round(W/110));i++)gl.push({x:R(0,W),y:R(-20,20),v:R(6,18),p:R(0,6.3),s:R(1.5,3.5),z:R(3,7)});
+ if(still)draw(0)}
+/* Độ cao sóng tại x: hai tần số sin chồng nhau tạo chuyển động phức hợp */
+function wy(x,k){return BY+(Math.sin(x*.015-t*2.7+k)*4.5+Math.cos(x*.04+t*4.8+k)*2.2)}
+function grad(al,flow){var g=cx.createLinearGradient(0,0,W,0),m=Math.ceil(W/40),k,e;for(k=0;k<=m;k++){e=Math.min(1,k/m*8,(1-k/m)*8);g.addColorStop(k/m,rgba(col(k/m*1.3-flow),al*e))}return g}
+function ribbon(k,lw,al,flow){var X;cx.beginPath();for(X=0;X<=W;X+=3)X?cx.lineTo(X,wy(X,k)):cx.moveTo(X,wy(X,k));cx.lineWidth=lw;cx.strokeStyle=grad(al,flow);cx.stroke()}
+function star(x,y,z,a,c){cx.strokeStyle=rgba(c,a);cx.lineWidth=1;cx.beginPath();cx.moveTo(x-z,y);cx.lineTo(x+z,y);cx.moveTo(x,y-z);cx.lineTo(x,y+z);cx.stroke();
+ cx.fillStyle='rgba(255,255,255,'+a+')';cx.beginPath();cx.arc(x,y,1.3,0,6.3);cx.fill()}
 function draw(dt){
  t+=dt;cx.clearRect(0,0,W,H);cx.globalCompositeOperation='lighter';
- var flow=t*.06,br=1+.12*Math.sin(t*1.3),X,i;
- /* 1. Đường lõi bạc mảnh chạy suốt chiều ngang */
- cx.lineWidth=1;cx.strokeStyle=grad(0,.5,flow);cx.beginPath();cx.moveTo(0,BY);cx.lineTo(W,BY);cx.stroke();
- /* 2. Ba dải lụa xoắn: phần tô mờ + hai mép sáng, chỗ giao nhau tạo hiệu ứng thắt nút */
- RB.forEach(function(r){
-  var w=function(x){return Math.sin(x*r.f3-t*r.s3+r.q*6.3)*r.T*br};
-  cx.beginPath();for(X=0;X<=W;X+=4)X?cx.lineTo(X,yy(r,X,br)-w(X)):cx.moveTo(X,yy(r,X,br)-w(X));
-  for(X=W;X>=0;X-=4)cx.lineTo(X,yy(r,X,br)+w(X));cx.closePath();cx.fillStyle=grad(r.q,r.a,flow);cx.fill();
-  [-1,1].forEach(function(sg){cx.beginPath();for(X=0;X<=W;X+=4)X?cx.lineTo(X,yy(r,X,br)+sg*w(X)):cx.moveTo(X,yy(r,X,br)+sg*w(X));cx.lineWidth=1.2;cx.strokeStyle=grad(r.q,.75,flow);cx.stroke()})});
- /* 3. Sao băng ánh sáng lướt dọc theo dải lụa chính */
- CM.forEach(function(m){
-  var hx=((t*m.sp+m.off)%(W+m.L*2+200))-m.L-100,r=RB[0],hy=yy(r,hx,br),c=col(hx/W*1.3-flow),tg=cx.createLinearGradient(hx-m.L,0,hx,0);
-  tg.addColorStop(0,rgba(c,0));tg.addColorStop(1,'rgba(255,255,255,.95)');
-  cx.beginPath();for(X=hx-m.L;X<=hx;X+=4)X>hx-m.L?cx.lineTo(X,yy(r,X,br)):cx.moveTo(X,yy(r,X,br));cx.lineCap='round';cx.lineWidth=2.2;cx.strokeStyle=tg;cx.stroke();
-  var rg=cx.createRadialGradient(hx,hy,0,hx,hy,30);rg.addColorStop(0,'rgba(255,255,255,.75)');rg.addColorStop(.25,rgba(c,.35));rg.addColorStop(1,rgba(c,0));
-  cx.fillStyle=rg;cx.fillRect(hx-30,hy-30,60,60)});
- /* 4. Bụi sáng bokeh trôi lơ lửng, nhấp nháy nhẹ */
- mo.forEach(function(p,i){p.x+=p.v;if(p.x>W+4)p.x=-4;var y=BY+p.y+Math.sin(t*.8+p.p)*5,a=.25+.55*(.5+.5*Math.sin(t*p.s+p.p));
-  cx.fillStyle=rgba(col(p.x/W*1.3-flow),a);cx.beginPath();cx.arc(p.x,y,p.r,0,6.3);cx.fill()});
+ var flow=t*.07,X,i,h,e,c;
+ /* 1. Vạch equalizer siêu mảnh chạy băng chuyền, cao thấp theo nhịp sóng */
+ var sx=(t*28)%10;cx.lineWidth=1.2;
+ for(X=sx;X<W;X+=10){e=Math.min(1,X/W*8,(1-X/W)*8);h=Math.abs(Math.sin(X*.02-t*3.2))*9+2;c=col(X/W*1.3-flow);var y=wy(X,0);
+  cx.strokeStyle=rgba(c,.7*e);cx.beginPath();cx.moveTo(X,y-h/2);cx.lineTo(X,y+h/2);cx.stroke()}
+ /* 2. Dải sóng chính: lớp glow rộng + lõi sáng, thêm một dải phụ lệch pha */
+ ribbon(0,7,.16,flow);ribbon(0,2,.95,flow);ribbon(2.1,1,.4,flow+.1);
+ /* 3. Tia lửa tách ra từ đỉnh sóng rồi tan dần */
+ if(!still&&sp.length<110&&Math.random()<.9){X=R(0,W);sp.push({x:X,y:wy(X,0),vx:R(-8,8),vy:R(-34,-8)*(Math.random()<.35?-1:1),a:0,m:R(.9,1.9),r:R(.6,1.7)})}
+ for(i=sp.length-1;i>=0;i--){var p=sp[i];p.a+=dt;if(p.a>=p.m){sp.splice(i,1);continue}
+  p.x+=p.vx*dt;p.y+=p.vy*dt;var f=1-p.a/p.m;c=col(p.x/W*1.3-flow);
+  cx.fillStyle=rgba(c,.9*f);cx.beginPath();cx.arc(p.x,p.y,p.r*(.5+f),0,6.3);cx.fill();
+  cx.fillStyle=rgba(c,.18*f);cx.beginPath();cx.arc(p.x,p.y,p.r*3.2,0,6.3);cx.fill()}
+ /* 4. Sao 4 cánh lấp lánh trôi chậm, nhấp nháy theo nhịp riêng */
+ gl.forEach(function(g){g.x+=g.v*dt;if(g.x>W+8)g.x=-8;var a=Math.pow(Math.max(0,Math.sin(t*g.s+g.p)),3);if(a<.02)return;
+  star(g.x,BY+g.y+Math.sin(t+g.p)*4,g.z*(.5+.5*a),a,col(g.x/W*1.3-flow))});
  cx.globalCompositeOperation='source-over'}
 function frame(now){requestAnimationFrame(frame);var dt=Math.min((now-last)/1000,.05);last=now;if(document.hidden)return;draw(dt)}
 place();addEventListener('resize',place);setTimeout(place,1000);if(window.ResizeObserver)new ResizeObserver(place).observe(hd);
