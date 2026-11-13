@@ -60,24 +60,34 @@ function grad(al,flow){var g=cx.createLinearGradient(0,0,W,0),m=Math.ceil(W/40),
 function ribbon(k,lw,al,flow){var X;cx.beginPath();for(X=0;X<=W;X+=3)X?cx.lineTo(X,wy(X,k)):cx.moveTo(X,wy(X,k));cx.lineWidth=lw;cx.strokeStyle=grad(al,flow);cx.stroke()}
 function star(x,y,z,a,c){cx.strokeStyle=rgba(c,a);cx.lineWidth=1;cx.beginPath();cx.moveTo(x-z,y);cx.lineTo(x+z,y);cx.moveTo(x,y-z);cx.lineTo(x,y+z);cx.stroke();
  cx.fillStyle='rgba(255,255,255,'+a+')';cx.beginPath();cx.arc(x,y,1.3,0,6.3);cx.fill()}
+/* Luồng sáng quét tuần hoàn trái -> phải: SWP_V = tốc độ (px/giây), SWP_L = độ dài vệt sáng, SWP_R = bán kính làm bừng sáng */
+var SWP_V=340,SWP_L=260,SWP_R=110;
+function swx(){return((t*SWP_V)%(W+SWP_L*2))-SWP_L}
+function bst(x,sx){var d=Math.abs(x-sx);return d<SWP_R?1-d/SWP_R:0}
 function draw(dt){
  t+=dt;cx.clearRect(0,0,W,H);cx.globalCompositeOperation='lighter';
- var flow=t*.07,X,i,h,e,c;
+ var flow=t*.07,sx0=swx(),X,i,h,e,c,b;
  /* 1. Vạch equalizer siêu mảnh chạy băng chuyền, cao thấp theo nhịp sóng */
  var sx=(t*28)%10;cx.lineWidth=1.2;
- for(X=sx;X<W;X+=10){e=Math.min(1,X/W*8,(1-X/W)*8);h=Math.abs(Math.sin(X*.02-t*3.2))*9+2;c=col(X/W*1.3-flow);var y=wy(X,0);
-  cx.strokeStyle=rgba(c,.7*e);cx.beginPath();cx.moveTo(X,y-h/2);cx.lineTo(X,y+h/2);cx.stroke()}
+ for(X=sx;X<W;X+=10){e=Math.min(1,X/W*8,(1-X/W)*8);b=bst(X,sx0);h=Math.abs(Math.sin(X*.02-t*3.2))*9+2+b*7;c=col(X/W*1.3-flow);var y=wy(X,0);
+  cx.strokeStyle=rgba(c,Math.min(1,(.7+b*.6)*e));cx.beginPath();cx.moveTo(X,y-h/2);cx.lineTo(X,y+h/2);cx.stroke()}
  /* 2. Dải sóng chính: lớp glow rộng + lõi sáng, thêm một dải phụ lệch pha */
  ribbon(0,7,.16,flow);ribbon(0,2,.95,flow);ribbon(2.1,1,.4,flow+.1);
+ /* 2b. Luồng sáng quét: vệt cyan -> đầu trắng bạc, bám theo đường sóng + quầng sáng ở đầu */
+ var a0=Math.max(0,sx0-SWP_L),a1=Math.min(W,sx0+30);
+ if(a1>a0){var sg=cx.createLinearGradient(sx0-SWP_L,0,sx0+30,0);sg.addColorStop(0,'rgba(0,229,255,0)');sg.addColorStop(.65,'rgba(0,229,255,.85)');sg.addColorStop(.9,'rgba(255,255,255,1)');sg.addColorStop(1,'rgba(255,255,255,0)');
+  [[8,.22],[2.5,1]].forEach(function(q){cx.beginPath();for(X=a0;X<=a1;X+=3)X>a0?cx.lineTo(X,wy(X,0)):cx.moveTo(X,wy(X,0));cx.lineWidth=q[0];cx.globalAlpha=q[1];cx.strokeStyle=sg;cx.stroke()});cx.globalAlpha=1;
+  if(sx0>=0&&sx0<=W){var hy=wy(sx0,0),rg=cx.createRadialGradient(sx0,hy,0,sx0,hy,28);rg.addColorStop(0,'rgba(255,255,255,.85)');rg.addColorStop(.3,'rgba(0,229,255,.35)');rg.addColorStop(1,'rgba(0,229,255,0)');cx.fillStyle=rg;cx.fillRect(sx0-28,hy-28,56,56)}}
  /* 3. Tia lửa tách ra từ đỉnh sóng rồi tan dần */
  if(!still&&sp.length<110&&Math.random()<.9){X=R(0,W);sp.push({x:X,y:wy(X,0),vx:R(-8,8),vy:R(-34,-8)*(Math.random()<.35?-1:1),a:0,m:R(.9,1.9),r:R(.6,1.7)})}
+ if(!still&&sx0>0&&sx0<W&&sp.length<160){for(i=0;i<2;i++)sp.push({x:sx0-R(0,40),y:wy(sx0,0),vx:R(-14,4),vy:R(-30,30),a:0,m:R(.5,1.2),r:R(.7,1.8)})}
  for(i=sp.length-1;i>=0;i--){var p=sp[i];p.a+=dt;if(p.a>=p.m){sp.splice(i,1);continue}
   p.x+=p.vx*dt;p.y+=p.vy*dt;var f=1-p.a/p.m;c=col(p.x/W*1.3-flow);
   cx.fillStyle=rgba(c,.9*f);cx.beginPath();cx.arc(p.x,p.y,p.r*(.5+f),0,6.3);cx.fill();
   cx.fillStyle=rgba(c,.18*f);cx.beginPath();cx.arc(p.x,p.y,p.r*3.2,0,6.3);cx.fill()}
  /* 4. Sao 4 cánh lấp lánh trôi chậm, nhấp nháy theo nhịp riêng */
- gl.forEach(function(g){g.x+=g.v*dt;if(g.x>W+8)g.x=-8;var a=Math.pow(Math.max(0,Math.sin(t*g.s+g.p)),3);if(a<.02)return;
-  star(g.x,BY+g.y+Math.sin(t+g.p)*4,g.z*(.5+.5*a),a,col(g.x/W*1.3-flow))});
+ gl.forEach(function(g){g.x+=g.v*dt;if(g.x>W+8)g.x=-8;var bb=bst(g.x,sx0),a=Math.min(1,Math.pow(Math.max(0,Math.sin(t*g.s+g.p)),3)+bb*.8);if(a<.02)return;
+  star(g.x,BY+g.y+Math.sin(t+g.p)*4,g.z*(.5+.5*a)*(1+bb*.6),a,col(g.x/W*1.3-flow))});
  cx.globalCompositeOperation='source-over'}
 function frame(now){requestAnimationFrame(frame);var dt=Math.min((now-last)/1000,.05);last=now;if(document.hidden)return;draw(dt)}
 place();addEventListener('resize',place);setTimeout(place,1000);if(window.ResizeObserver)new ResizeObserver(place).observe(hd);
