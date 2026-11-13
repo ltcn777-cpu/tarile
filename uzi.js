@@ -7,7 +7,7 @@ var KIDS=[['FF','unit-ff.jpg','QUÂN ĐOÀN UZI · FREE FIRE'],['LQ','unit-lq.jp
 /* Mặt khối mẹ: logo (ảnh nhúng sẵn trong uzi.css) chia 3 lớp: biểu tượng / UZI / LEGENDS, mỗi lớp một hiệu ứng */
 function lg(){return '<img class="lgimg" src="logo-uzi.jpg" alt="" aria-hidden="true" draggable="false">'}
 function im(t,s){return '<span>'+t+'</span><img src="'+s+'" alt="" onload="this.previousSibling.remove()" onerror="this.remove()">'}
-$('stage').innerHTML='<div class="cube" id="cube">'+[0,1,2,3,4,5].map(function(){return '<div>'+lg()+'</div>'}).join('')+'</div>'+KIDS.map(function(k,i){return '<div class="cc c'+(i+1)+'" data-n="'+k[2]+'" tabindex="0"><div class="cs"><div class="ck">'+[0,1,2,3,4,5].map(function(n){return '<div>'+(n?k[0]:im(k[0],k[1]))+'</div>'}).join('')+'</div></div></div>'}).join('');
+$('stage').innerHTML='<div class="cube" id="cube">'+[0,1,2,3,4,5].map(function(){return '<div>'+lg()+'</div>'}).join('')+'</div>'+KIDS.map(function(k,i){return '<div class="cc c'+(i+1)+'" data-n="'+k[2]+'" tabindex="0"><div class="cs"><div class="ck">'+[0,1,2,3,4,5].map(function(){return '<div>'+im(k[0],k[1])+'</div>'}).join('')+'</div></div></div>'}).join('');
 /* HERO: khối 3D xoay theo chuột + nhảy số */
 var cube=$('cube'),ry=25,rx=-20,tx=0,ty=0;
 $('hero').addEventListener('mousemove',function(e){var r=this.getBoundingClientRect();tx=((e.clientY-r.top)/r.height-.5)*-70;ty=((e.clientX-r.left)/r.width-.5)*160});
